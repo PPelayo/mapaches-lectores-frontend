@@ -1,5 +1,4 @@
 import MainHeader from '@/core/components/header/MainHeader'
-import BookCard from '@/features/books/components/BookCard'
 import MorePopularBooks from '@/features/books/components/MorePopularBooks'
 
 export default function Home() {
