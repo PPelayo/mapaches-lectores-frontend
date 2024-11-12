@@ -11,11 +11,16 @@ export default function Login() {
 
     return (
         <div className="w-full flex flex-col items-center justify-center mt-10">
-            <header>
+            <header className="flex flex-col items-center gap-6">
+                <Link href={"/"}>
+                    <picture className="border-2 border-secondary rounded-lg text-secondary text-2xl px-4 py-2">
+                        Insertar logo
+                    </picture>
+                </Link>
                 <h1 className="text-3xl font-bold uppercase">Iniciar Sesión</h1>
             </header>
             <section>
-                <form onSubmit={handleSubmit} className="flex flex-col gap-6 py-8 px-8">
+                <form onSubmit={handleSubmit} className="flex flex-col gap-6 mt-4">
                     <label>
                         <h4 className="text-lg ml-1">Email *</h4>
                         <input
