@@ -5,6 +5,7 @@ import BasicInput from '@/core/components/inputs/BasicInput'
 import RegisterRequest from '@/features/auth/definitions/registerRequest'
 import { useRegister } from '@/features/auth/hooks/useRegister'
 import Link from 'next/link'
+import { useRouter } from 'next/navigation'
 import { useEffect } from 'react'
 import toast, { Toaster } from 'react-hot-toast'
 
@@ -17,6 +18,8 @@ export default function Register() {
         user
     } = useRegister()
 
+
+    const router = useRouter()
 
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         console.log('submit');
@@ -36,9 +39,13 @@ export default function Register() {
     }, [error])
 
     useEffect(()=> {
-        if(user)
+        if(user){
             toast.success('Usuario registrado')
-    }, [user])
+            router.push('/')
+            //TODO: Guardar el usuario en zustand 
+        }
+            
+    }, [user, router])
 
     return (
         <>
