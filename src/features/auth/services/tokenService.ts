@@ -7,7 +7,7 @@ export function saveTokens(tokens: TokenWrapper): void {
 
 export function getTokens(): TokenWrapper | undefined {
     const accessToken = localStorage.getItem('accessToken')
-    const refreshToken = localStorage.getItem('accessToken')
+    const refreshToken = localStorage.getItem('refreshToken')
 
     if(!accessToken || !refreshToken) return
 
@@ -15,6 +15,6 @@ export function getTokens(): TokenWrapper | undefined {
 }
 
 export function deleteTokens() {
-    localStorage.removeItem('accessToken')
-    localStorage.removeItem('refreshToken')
+    // localStorage.removeItem('accessToken')
+    // localStorage.removeItem('refreshToken')
 }

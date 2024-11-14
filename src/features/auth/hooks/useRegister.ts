@@ -1,5 +1,5 @@
 import { useState } from "react"
-import { baseAxiosClient } from "../axios/baseAxiosClient"
+import { baseAxiosClient } from "../axios/axiosClient"
 import BaseResponse from "@/core/definitinos/BaseResponse"
 import RegisterResponse from "../definitions/registerResponse"
 import { saveTokens } from "../services/tokenService"

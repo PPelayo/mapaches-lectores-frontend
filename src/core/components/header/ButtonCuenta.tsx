@@ -6,7 +6,7 @@ import { useUserStore } from '@/features/auth/services/useUserStore'
 import { Fragment, useEffect, useState } from 'react'
 import { deleteTokens, getTokens } from '@/features/auth/services/tokenService'
 import BasicLoader from '../loaders/BasicLoader'
-import { baseAxiosClient } from '@/features/auth/axios/baseAxiosClient'
+import { authAxiosClient } from '@/features/auth/axios/axiosClient'
 import BaseResponse from '@/core/definitinos/BaseResponse'
 import User from '@/features/auth/definitions/user'
 import {
@@ -25,8 +25,8 @@ export default function ButtonCuenta() {
     useEffect(() => {
         const tokens = getTokens()
         if (user || !tokens) return
-
-        baseAxiosClient
+        setLoading(true)
+        authAxiosClient
             .get<BaseResponse<User, string>>('/user/me')
             .then(({ data }) => {
                 setLoading(false)

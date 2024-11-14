@@ -1,6 +1,6 @@
 import { useState } from "react"
 import LoginRequest from "../definitions/loginRequest"
-import { baseAxiosClient } from "../axios/baseAxiosClient"
+import { baseAxiosClient } from "../axios/axiosClient"
 import BaseResponse from "@/core/definitinos/BaseResponse"
 import { AxiosError } from "axios"
 import loginResponse from "../definitions/loginResponse"
