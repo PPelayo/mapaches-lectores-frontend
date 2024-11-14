@@ -1,4 +1,4 @@
-import TokenWrapper from "../definitions/tokenWrapper";
+import TokenWrapper from "@/features/auth/definitions/tokenWrapper";
 
 export function saveTokens(tokens: TokenWrapper): void {
     localStorage.setItem('accessToken', tokens.accessToken);
@@ -12,4 +12,9 @@ export function getTokens(): TokenWrapper | undefined {
     if(!accessToken || !refreshToken) return
 
     return { accessToken, refreshToken }
+}
+
+export function deleteTokens() {
+    localStorage.removeItem('accessToken')
+    localStorage.removeItem('refreshToken')
 }

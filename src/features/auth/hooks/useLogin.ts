@@ -11,6 +11,7 @@ export default function useLogin(){
 
     const [loading, setLoading] = useState(false)
     const [error, setError] = useState<string | null>(null)
+    const [success, setSuccess] = useState<boolean>(false)
 
     const { setUser } = useUserStore()
 
@@ -23,17 +24,19 @@ export default function useLogin(){
                 const { tokens, user } = res.data.result
                 saveTokens(tokens)
                 setUser(user)
+                setSuccess(true)
             })
             .catch((ex) => {
                 if(ex instanceof AxiosError && ex.status === 400){
                     setError('Usuario y/o contraseña incorrectos')
                     return
                 }
-
+                console.error('Error al iniciar sesión', ex)
                 setError('Error desconocido')
             })  
             .finally(() => {
                 setLoading(false)
+                setSuccess(false)
             })
     }
 
@@ -41,6 +44,7 @@ export default function useLogin(){
     return {
         login,
         loading,
-        error
+        error,
+        success
     }
 }
