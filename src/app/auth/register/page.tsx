@@ -4,6 +4,7 @@ import PrimaryButton from '@/core/components/buttons/PrimaryButton'
 import BasicInput from '@/core/components/inputs/BasicInput'
 import RegisterRequest from '@/features/auth/definitions/registerRequest'
 import { useRegister } from '@/features/auth/hooks/useRegister'
+import { useUserStore } from '@/features/auth/services/useUserStore'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { useEffect } from 'react'
@@ -15,9 +16,9 @@ export default function Register() {
         loading,
         error,
         register,
-        user
     } = useRegister()
 
+    const { user } = useUserStore()
 
     const router = useRouter()
 
@@ -42,7 +43,6 @@ export default function Register() {
         if(user){
             toast.success('Usuario registrado')
             router.push('/')
-            //TODO: Guardar el usuario en zustand 
         }
             
     }, [user, router])

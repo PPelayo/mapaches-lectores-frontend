@@ -3,16 +3,16 @@ import { baseAxiosClient } from "../axios/baseAxiosClient"
 import BaseResponse from "@/core/definitinos/BaseResponse"
 import RegisterResponse from "../definitions/registerResponse"
 import { saveTokens } from "../services/tokenService"
-import User from "../definitions/user"
 import RegisterRequest from "../definitions/registerRequest"
 import { AxiosError } from "axios"
+import { useUserStore } from "../services/useUserStore"
 
 export function useRegister() {
 
     const [loading, setLoading] = useState(false)
     const [error, setError] = useState<string | null>(null)
-    const [user, setUser] = useState<User | null>(null)
 
+    const { setUser } = useUserStore()
 
     const register = (registerRequest: RegisterRequest) => {
         if(registerRequest.password !== registerRequest.confirmPassword)
@@ -22,9 +22,9 @@ export function useRegister() {
         setError(null)
         baseAxiosClient.post<BaseResponse<RegisterResponse, string>>("/auth/register", registerRequest)
             .then((res) => {
-                const tokens = res.data.result.tokens
+                const { user, tokens } = res.data.result
                 saveTokens(tokens)
-                setUser(res.data.result.user)
+                setUser(user)
             })
             .catch((er) => {
                 console.log('err', er);
@@ -43,6 +43,5 @@ export function useRegister() {
         register,
         loading,
         error,
-        user
     }
 }
