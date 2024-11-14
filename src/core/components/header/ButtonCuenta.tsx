@@ -76,6 +76,14 @@ function ButtonWithoutLogin() {
 }
 
 function ButtonWithLogin({ user }: { user: User }) {
+
+    const { clearUser } = useUserStore()
+
+    const handleCloseSesion = () => {
+        clearUser()
+        deleteTokens()
+    }
+
     return (
         <div>
             <Menu>
@@ -114,6 +122,7 @@ function ButtonWithLogin({ user }: { user: User }) {
                                 'text-red-500 font-bold px-2 py-2 transition-colors duration-200 hover:bg-secondary hover:text-red-300 '
                             }
                             as="button"
+                            onClick={handleCloseSesion}
                         >
                             Cerrar sesión
                         </MenuItem>

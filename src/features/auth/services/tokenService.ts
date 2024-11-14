@@ -15,6 +15,6 @@ export function getTokens(): TokenWrapper | undefined {
 }
 
 export function deleteTokens() {
-    // localStorage.removeItem('accessToken')
-    // localStorage.removeItem('refreshToken')
+    localStorage.removeItem('accessToken')
+    localStorage.removeItem('refreshToken')
 }
