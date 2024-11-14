@@ -1,10 +1,10 @@
 import { ReactNode } from "react"
-import { SyncLoader } from "react-spinners"
+import { PulseLoader } from "react-spinners"
 import { LoaderSizeMarginProps } from "react-spinners/helpers/props"
 
 interface Props extends React.HTMLAttributes<HTMLDivElement> {
     loading : boolean,
-    children : ReactNode,
+    children? : ReactNode,
     innerProps? : LoaderSizeMarginProps
 }
 
@@ -14,7 +14,7 @@ export default function BasicLoader(props : Props) {
         loading
         ? 
             <div {...props}>
-                <SyncLoader
+                <PulseLoader
                     color="var(--background)"
                     {...innerProps}
                  />
