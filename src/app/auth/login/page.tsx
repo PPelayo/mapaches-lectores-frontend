@@ -2,13 +2,24 @@
 
 import PrimaryButton from "@/core/components/buttons/PrimaryButton";
 import BasicInput from "@/core/components/inputs/BasicInput";
+import LoginRequest from "@/features/auth/definitions/loginRequest";
+import useLogin from "@/features/auth/hooks/useLogin";
 import Link from "next/link";
 
 
 export default function Login() {
 
+    const {
+        error,
+        loading,
+        login
+    } = useLogin()
+
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
+
+        const req = Object.fromEntries(new FormData(e.currentTarget))
+        login(req as unknown as LoginRequest)
     }
 
     return (
@@ -25,6 +36,7 @@ export default function Login() {
                 <form onSubmit={handleSubmit} className="flex flex-col gap-6 mt-4">
                     <BasicInput
                         label="Email *"
+                        error={error}
                         baseAttributes={{
                             required: true,
                             type: "email",
@@ -42,7 +54,8 @@ export default function Login() {
                     <div className="flex flex-col gap-4">
                         <PrimaryButton
                             basicAttributes={{
-                                type: "submit"
+                                type: "submit",
+                                disabled: loading
                             }}
                         >Iniciar sesión</PrimaryButton>
                         <Link href="/auth/register"
