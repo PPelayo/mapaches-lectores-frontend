@@ -6,10 +6,10 @@ import { FormEvent, useState } from 'react'
 import ReactStars from 'react-stars'
 import {
     CreateReviewsRequest,
-    Rating,
 } from '../definitions/createReviewsRequest'
 import toast, { Toaster } from 'react-hot-toast'
 import { AxiosError } from 'axios'
+import { Rating } from '../definitions/review'
 
 interface Props {
     bookId: string

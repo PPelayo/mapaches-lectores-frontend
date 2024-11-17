@@ -3,6 +3,9 @@ import { baseAxiosClient } from "@/features/auth/axios/axiosClient"
 import UploadReviewForm from "@/features/reviews/components/UploadReviewForm"
 import { Book } from "../definitions/Book"
 import { AxiosError } from "axios"
+import PaginationResult from "@/core/definitinos/PaginationResult"
+import ShowReviews from "@/features/reviews/components/ShowReviews"
+import { Review } from "@/features/reviews/definitions/review"
 
 interface Props {
     bookId: string
@@ -11,15 +14,17 @@ interface Props {
 export default async function BookPage({ bookId }: Props) {
 
     let error = ''
-
     let book : Book | undefined = undefined
+    let initialsReviews : PaginationResult<Review> | undefined = undefined
 
     try{
         const bookResult = await baseAxiosClient.get<BaseResponse<Book, string>>(`/books/${bookId}`)
-
         book = bookResult.data.result
 
-        console.log(book);
+        const reviewsResult = await baseAxiosClient.get<BaseResponse<PaginationResult<Review>, string>>(`/books/${bookId}/reviews`)
+        initialsReviews = reviewsResult.data.result
+
+        console.log(reviewsResult.data.result.data);
         
 
     } catch(ex) {
@@ -63,59 +68,10 @@ export default async function BookPage({ bookId }: Props) {
                 </section>
                 <section>
                     <UploadReviewForm bookId={bookId} />
-                    <div className="grid grid-cols-12 gap-4">
-                        <div className="col-span-12">
-                            <p className="text-lg">Comentario1</p>
-                        </div>
-                        <div className="col-span-12">
-                            <p className="text-lg">Comentario2</p>
-                        </div>
-                        <div className="col-span-12">
-                            <p className="text-lg">Comentario3</p>
-                        </div>
-                        <div className="col-span-12">
-                            <p className="text-lg">Comentario3</p>
-                        </div>
-                        <div className="col-span-12">
-                            <p className="text-lg">Comentario3</p>
-                        </div>
-                        <div className="col-span-12">
-                            <p className="text-lg">Comentario3</p>
-                        </div>
-                        <div className="col-span-12">
-                            <p className="text-lg">Comentario3</p>
-                        </div>
-                        <div className="col-span-12">
-                            <p className="text-lg">Comentario3</p>
-                        </div>
-                        <div className="col-span-12">
-                            <p className="text-lg">Comentario3</p>
-                        </div>
-                        <div className="col-span-12">
-                            <p className="text-lg">Comentario3</p>
-                        </div>
-                        <div className="col-span-12">
-                            <p className="text-lg">Comentario3</p>
-                        </div>
-                        <div className="col-span-12">
-                            <p className="text-lg">Comentario3</p>
-                        </div>
-                        <div className="col-span-12">
-                            <p className="text-lg">Comentario3</p>
-                        </div>
-                        <div className="col-span-12">
-                            <p className="text-lg">Comentario3</p>
-                        </div>
-                        <div className="col-span-12">
-                            <p className="text-lg">Comentario3</p>
-                        </div>
-                        <div className="col-span-12">
-                            <p className="text-lg">Comentario3</p>
-                        </div>
-                        <div className="col-span-12">
-                            <p className="text-lg">Comentario3</p>
-                        </div>
-                    </div>
+                    <ShowReviews bookId={bookId} iniitalReviews={initialsReviews} />
+                    {/* <div className="grid grid-cols-12 gap-4">
+                        
+                    </div> */}
                 </section>
             </div>
         </>
