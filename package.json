@@ -10,12 +10,14 @@
   },
   "dependencies": {
     "@headlessui/react": "2.2.0",
+    "@types/react-stars": "^2.2.4",
     "axios": "1.7.7",
     "next": "14.2.17",
     "react": "^18",
     "react-dom": "^18",
     "react-hot-toast": "2.4.1",
     "react-spinners": "0.14.1",
+    "react-stars": "^2.2.5",
     "zustand": "5.0.1"
   },
   "devDependencies": {
