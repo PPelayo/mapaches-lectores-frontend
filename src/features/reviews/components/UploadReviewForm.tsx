@@ -1,15 +1,27 @@
 'use client'
 
+import { authAxiosClient } from '@/features/auth/axios/axiosClient'
 import { Button, Input } from '@headlessui/react'
 import { FormEvent, useState } from 'react'
 import ReactStars from 'react-stars'
+import {
+    CreateReviewsRequest,
+    Rating,
+} from '../definitions/createReviewsRequest'
+import toast, { Toaster } from 'react-hot-toast'
+import { AxiosError } from 'axios'
 
-export default function UploadReviewForm() {
+interface Props {
+    bookId: string
+}
+
+export default function UploadReviewForm({ bookId }: Props) {
     const [showButtons, setShowButtons] = useState(false)
     const [comment, setComment] = useState('')
-    const [rating, setRating] = useState(0)
+    const [rating, setRating] = useState<Rating>(0)
+    const [uploading, setUploading] = useState(false)
 
-    const handleCancel = () => {
+    const resetForm = () => {
         setComment('')
         setRating(0)
         setShowButtons(false)
@@ -17,16 +29,41 @@ export default function UploadReviewForm() {
 
     const handleSubmit = (e: FormEvent) => {
         e.preventDefault()
+
+        const req: CreateReviewsRequest = {
+            description: comment,
+            generalRating: rating,
+        }
+
+        authAxiosClient
+            .post(`/books/${bookId}/reviews`, req)
+            .then(resetForm)
+            .catch((ex) => {
+                if(ex instanceof AxiosError) {
+                    if(ex.response?.status === 401){
+                        toast.error('Necesitas estar logeado para comentar')
+                        return
+                    }
+                    if(ex.response?.status === 403){
+                        toast.error('Ya has comentado este libro.')
+                        return
+                    }
+                }
+                toast.error('Ocurrio un error al enviar el comentario')
+            })
+            .finally(() => setUploading(false))
     }
 
     return (
         <>
+            <Toaster position='bottom-right' />
             <h2 className="text-xl font-bold">Comentarios</h2>
             <form
                 onSubmit={handleSubmit}
                 className="grid grid:cols-6 sm:grid-cols-8 w-full my-2 sm:gap-2"
             >
                 <Input
+                    autoComplete="off"
                     value={comment}
                     onChange={(e) => setComment(e.target.value)}
                     onFocus={() => setShowButtons(true)}
@@ -47,13 +84,13 @@ export default function UploadReviewForm() {
                                 color2={'#ffd700'}
                                 value={rating}
                                 half={false}
-                                onChange={(r : number) => setRating(r)}
+                                onChange={(r: number) => setRating(r as Rating)}
                                 className="flex "
                             />
                         </div>
                         <Button
                             type="button"
-                            onClick={handleCancel}
+                            onClick={resetForm}
                             className={
                                 'col-start-1 sm:col-start-7 text-black rounded-full transition-all duration-200 ease-in data-[hover]:bg-background'
                             }
@@ -62,7 +99,7 @@ export default function UploadReviewForm() {
                         </Button>
                         <Button
                             type="submit"
-                            disabled={!comment}
+                            disabled={!comment || uploading || rating === 0}
                             className={
                                 'col-start-6 sm:col-start-8 bg-primary rounded-full px-4 py-2 text-md transition-all duration-200 ease-in data-[hover]:brightness-75 data-[disabled]:opacity-50'
                             }
