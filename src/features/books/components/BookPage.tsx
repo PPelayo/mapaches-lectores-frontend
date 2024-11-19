@@ -70,6 +70,7 @@ export default async function BookPage({ bookId }: Props) {
                     </article>
                 </section>
                 <section className="flex flex-col gap-4">
+                    <h2 className="text-xl font-bold">Comentarios</h2>
                     <UploadReviewForm bookId={bookId} />
                     <ShowReviews bookId={bookId} iniitalReviews={initialsReviews} />
                     {/* <div className="grid grid-cols-12 gap-4">
