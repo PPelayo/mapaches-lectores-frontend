@@ -73,7 +73,7 @@ export default function UploadReviewForm({ bookId }: Props) {
                     onSubmit={handleSubmit}
                     className={`grid grid:cols-6 sm:grid-cols-8 w-full my-2 sm:gap-2 ${
                         showButtons &&
-                        'border-2 border-secondary rounded-xl p-4'
+                        'border-2 border-secondary rounded-xl p-4 shadow-xl'
                     }`}
                     layout
                     initial={{ borderRadius: '0px', padding: '0px' }}
