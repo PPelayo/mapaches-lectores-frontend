@@ -3,6 +3,7 @@ import { Response } from "@/core/definitinos/BaseResponse"
 
 
 export interface Review extends Response {
+    title: string
     bookId: string
     description: string
     generalRating: Rating

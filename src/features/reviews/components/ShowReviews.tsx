@@ -53,7 +53,7 @@ export default function ShowReviews({ iniitalReviews, bookId }: Props) {
     return (
         <>
             <FullError error={error}>
-                <section className="flex flex-col gap-4">
+                <section className="grid grid-cols-1 gap-4 md:">
                     {reviews.map((review) => (
                         <ReviewComponent
                             review={review}

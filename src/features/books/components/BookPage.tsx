@@ -28,12 +28,15 @@ export default async function BookPage({ bookId }: Props) {
         
 
     } catch(ex) {
-        if(ex instanceof AxiosError)
-            error = ex.response?.data.message || `Ocurrio un error al obtener el libro ${ex}`
+        if(ex instanceof AxiosError && ex.status === 404)
+            error = 'No se encontró el libro'
+        else
+            error = 'Ocurrió un error al cargar el libro :C'
+            
     }
 
     if(error || !book)
-        return <div className="text-red-500 text-2xl text-center">{error}</div>
+        return <div className="text-red-500 text-2xl text-center mt-10">{error}</div>
     
     return (
         <>
@@ -66,7 +69,7 @@ export default async function BookPage({ bookId }: Props) {
                         </main>
                     </article>
                 </section>
-                <section>
+                <section className="flex flex-col gap-4">
                     <UploadReviewForm bookId={bookId} />
                     <ShowReviews bookId={bookId} iniitalReviews={initialsReviews} />
                     {/* <div className="grid grid-cols-12 gap-4">

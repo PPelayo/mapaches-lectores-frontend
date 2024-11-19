@@ -3,13 +3,13 @@
 import { authAxiosClient } from '@/features/auth/axios/axiosClient'
 import { Button, Input } from '@headlessui/react'
 import { FormEvent, useState } from 'react'
-import ReactStars from 'react-stars'
 import {
     CreateReviewsRequest,
 } from '../definitions/createReviewsRequest'
 import toast, { Toaster } from 'react-hot-toast'
 import { AxiosError } from 'axios'
 import { Rating } from '../definitions/review'
+import { Rating as RatingMui, } from '@mui/material'
 
 interface Props {
     bookId: string
@@ -78,14 +78,9 @@ export default function UploadReviewForm({ bookId }: Props) {
                     <>
                         <div className="flex flex-row gap-2 items-center col-span-6 sm:col-span-2">
                             <span>Valoracion General:</span>
-                            <ReactStars
-                                count={5}
-                                size={24}
-                                color2={'#ffd700'}
+                            <RatingMui
                                 value={rating}
-                                half={false}
-                                onChange={(r: number) => setRating(r as Rating)}
-                                className="flex "
+                                onChange={(e, newValue) => setRating(newValue as Rating ?? 0)}
                             />
                         </div>
                         <Button
