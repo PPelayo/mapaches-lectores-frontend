@@ -1,6 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
 import PrimaryButton from '@/core/components/buttons/PrimaryButton'
 import BasicTextField from '@/core/components/inputs/BasicTextField'
+import AuthorSearcher from '../components/AuthorSearcher'
 
 export default function CreateBookPage() {
     return (
@@ -23,11 +24,7 @@ export default function CreateBookPage() {
                             minRows={5}
                             maxRows={20}
                         />
-                        <BasicTextField
-                            label="Autor"
-                            variant='outlined'
-                            maxRows={1}
-                        />
+                        <AuthorSearcher/>
                         <div className='flex-1 w-full flex items-end justify-center'>
                         <PrimaryButton basicAttributes={{
                             type: 'submit',
