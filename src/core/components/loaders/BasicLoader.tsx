@@ -13,12 +13,12 @@ export default function BasicLoader(props : Props) {
     return (
         loading
         ? 
-            <div {...props}>
+            <>
                 <PulseLoader
                     color="var(--background)"
                     {...innerProps}
                  />
-            </div>
+            </>
         : 
             children
     )
