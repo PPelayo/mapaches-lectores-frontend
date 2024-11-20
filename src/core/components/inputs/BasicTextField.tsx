@@ -13,6 +13,9 @@ export default function BasicTextField(props : TextFieldProps){
                     '& .MuiInput-root::after': {
                         borderColor: 'var(--secondary)',
                     },
+                    '& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline' : {
+                        borderColor: 'var(--secondary)',
+                    }
                 }}
             />
         </>
