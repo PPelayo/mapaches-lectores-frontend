@@ -49,7 +49,10 @@ export default function UploadReviewForm({ bookId }: Props) {
 
         authAxiosClient
             .post(`/books/${bookId}/reviews`, req)
-            .then(resetForm)
+            .then(() => {
+                toast.success('Comentario enviado correctamente')
+                resetForm()
+            })
             .catch((ex) => {
                 if (ex instanceof AxiosError) {
                     if (ex.response?.status === 401) {
@@ -92,8 +95,8 @@ export default function UploadReviewForm({ bookId }: Props) {
                 >
                     <TextField
                         autoComplete="off"
-                        value={comment}
-                        onChange={(e) => setComment(e.target.value)}
+                        value={title}
+                        onChange={(e) => setTitle(e.target.value)}
                         onFocus={handleInputFocus}
                         type="text"
                         label={showButtons ? 'Titulo' : 'Comentario...'}
@@ -112,8 +115,8 @@ export default function UploadReviewForm({ bookId }: Props) {
                     />
                     <TextField
                         autoComplete="off"
-                        value={title}
-                        onChange={(e) => setTitle(e.target.value)}
+                        value={comment}
+                        onChange={(e) => setComment(e.target.value)}
                         type="text"
                         label={'Comentario...'}
                         multiline={true}

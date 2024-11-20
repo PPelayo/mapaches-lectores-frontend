@@ -41,7 +41,7 @@ export default async function BookPage({ bookId }: Props) {
     return (
         <>
             <div className="flex flex-col gap-8 p-4 h-max max-w-7xl place-self-center w-full">
-                <section className="flex flex-row gap-4">
+                <section className="flex flex-row gap-12">
                     <picture className="flex justify-center aspect-portada border-2 rounded-lg overflow-hidden shadow-lg transition-transform duration-200 ease-in-out hover:scale-[1.02]">
                         <img
                             loading="lazy"
