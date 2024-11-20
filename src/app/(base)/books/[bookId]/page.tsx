@@ -1,4 +1,4 @@
-import BookPage from "@/features/books/components/BookPage"
+import BookPage from "@/features/books/pages/BookPage"
 
 /* eslint-disable @next/next/no-img-element */
 interface Props {
