@@ -15,6 +15,7 @@ export default function useSearcher<T>(urlToFetch: string) {
     const handleSearch = useCallback((query: string) => {
         // if(!query) return
         setLoading(true)
+        setError(null)
         baseAxiosClient.get<BaseResponse<PaginationResult<T>, string>>(urlToFetch, {
             params: {
                 limit: MAX_LIMIT,

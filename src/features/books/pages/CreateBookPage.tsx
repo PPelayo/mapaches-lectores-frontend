@@ -5,10 +5,14 @@ import BasicTextField from '@/core/components/inputs/BasicTextField'
 import AuthorSearcher from '../components/AuthorSearcher'
 import Author from '../definitions/Author'
 import { useState } from 'react'
+import CategorySearcher from '../components/CategorySearcher'
+import Category from '../definitions/Category'
 
 export default function CreateBookPage() {
 
     const [authors, setAuthros] = useState<Author[]>([])
+    const [categories, setCategories] = useState<Category[]>([])
+
 
     return (
         <>
@@ -31,6 +35,11 @@ export default function CreateBookPage() {
                             maxRows={20}
                         />
                         <AuthorSearcher selectedAuthors={authors} setSelectedAuthors={setAuthros} />
+                        <CategorySearcher
+                            selectedCategories={categories}
+                            setSelectedCategories={setCategories}
+                        />
+                        
                         <div className='flex-1 w-full flex items-end justify-center'>
                         <PrimaryButton basicAttributes={{
                             type: 'submit',
