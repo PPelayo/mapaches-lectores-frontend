@@ -84,11 +84,11 @@ export default function CategorySearcher({
                 )}
                 <BasicLoader loading={loading}>
                     <BasicSelect
+                        label='Categorias'
                         items={categoriesToShow}
                         onChange={handleItemSelected}
                         render={(category) => category.description}
                         value=""
-                        displayEmpty
                     />
                 </BasicLoader>
             </div>
