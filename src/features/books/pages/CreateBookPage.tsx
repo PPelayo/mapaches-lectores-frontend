@@ -1,9 +1,15 @@
+'use client'
 /* eslint-disable @next/next/no-img-element */
 import PrimaryButton from '@/core/components/buttons/PrimaryButton'
 import BasicTextField from '@/core/components/inputs/BasicTextField'
 import AuthorSearcher from '../components/AuthorSearcher'
+import Author from '../definitions/Author'
+import { useState } from 'react'
 
 export default function CreateBookPage() {
+
+    const [authors, setAuthros] = useState<Author[]>([])
+
     return (
         <>
             <section className='w-full max-w-5xl place-self-center mt-2 sm:mt-8 p-4'>
@@ -24,7 +30,7 @@ export default function CreateBookPage() {
                             minRows={5}
                             maxRows={20}
                         />
-                        <AuthorSearcher/>
+                        <AuthorSearcher selectedAuthors={authors} setSelectedAuthors={setAuthros} />
                         <div className='flex-1 w-full flex items-end justify-center'>
                         <PrimaryButton basicAttributes={{
                             type: 'submit',

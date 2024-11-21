@@ -15,3 +15,13 @@ export interface Book {
     updatedAt: string
     itemUuid: string
   }
+  export interface CreateBookRequest {
+    name: string
+    synopsis: string
+    publishedDate: Date
+    numberOfPages: number
+    publisherId: string
+    authors: string[]
+    categories: string[]
+  }
+  
