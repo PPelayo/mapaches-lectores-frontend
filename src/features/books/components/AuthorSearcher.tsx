@@ -1,8 +1,8 @@
 'use client'
 
-import SearcherTextField from '@/core/components/inputs/SearcherTextField'
 import Author from '../definitions/Author'
 import BasicChip from '@/core/components/chips/BasicChip'
+import MultiSearcherTextField from '@/core/components/inputs/MultiSearcherTextField'
 
 interface Props {
     selectedAuthors: Author[]
@@ -20,7 +20,7 @@ export default function AuthorSearcher({
 
     return (
         <>
-            <SearcherTextField
+            <MultiSearcherTextField
                 label="Autores"
                 selectedItems={selectedAuthors}
                 setSelectedItems={setSelectedAuthors}
