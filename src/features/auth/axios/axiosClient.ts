@@ -7,20 +7,14 @@ export const baseAxiosClient = axios.create({
     baseURL: process.env.NEXT_PUBLIC_API_URL,
     httpAgent: new https.Agent({
         rejectUnauthorized: false
-    }),
-    headers: {
-        'Content-Type': 'application/json'
-    }
+    })
 })
 
 export const authAxiosClient = axios.create({
     baseURL: process.env.NEXT_PUBLIC_API_URL,
     httpAgent: new https.Agent({
         rejectUnauthorized: false
-    }),
-    headers: {
-        'Content-Type': 'application/json'
-    }
+    })
 })
 
 interface AxiosRequestConfigExtend extends AxiosRequestConfig {

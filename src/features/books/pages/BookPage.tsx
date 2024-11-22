@@ -30,9 +30,11 @@ export default async function BookPage({ bookId }: Props) {
     } catch(ex) {
         if(ex instanceof AxiosError && ex.status === 404)
             error = 'No se encontró el libro'
-        else
-            error = 'Ocurrió un error al cargar el libro :C'
-            
+        else{
+            error = 'Ocurrió un error al cargar el libro'
+            // console.error(ex)
+        }
+
     }
 
     if(error || !book)

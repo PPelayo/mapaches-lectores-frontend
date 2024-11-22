@@ -4,36 +4,74 @@ import PrimaryButton from '@/core/components/buttons/PrimaryButton'
 import BasicTextField from '@/core/components/inputs/BasicTextField'
 import AuthorSearcher from '../components/AuthorSearcher'
 import Author from '../definitions/Author'
-import { ChangeEvent, useState } from 'react'
+import {ChangeEvent, FormEvent, useState} from 'react'
 import CategorySearcher from '../components/CategorySearcher'
 import Category from '../definitions/Category'
 import PublisherSearcher from '../components/PublisherSearcher'
-import { Publisher } from '../definitions/Publisher'
-import { CreateBookRequest } from '../definitions/Book'
-import toast, { Toaster } from 'react-hot-toast'
-import { authAxiosClient } from '@/features/auth/axios/axiosClient'
-import { AxiosError } from 'axios'
+import {Publisher} from '../definitions/Publisher'
+import {Book, CreateBookRequest} from '../definitions/Book'
+import toast, {Toaster} from 'react-hot-toast'
+import {authAxiosClient} from '@/features/auth/axios/axiosClient'
+import {AxiosError} from 'axios'
+import ImageUploadButton from '../components/ImageUploadButton'
+import ImageIcon from "@/core/components/icons/ImageIcon";
+import BaseResponse from "@/core/definitinos/BaseResponse";
+import {useRouter} from "next/navigation";
 
 export default function CreateBookPage() {
 
+    const [book, _] = useState<Book | null>(null)
+
     const [title, setTitle] = useState('')
     const [synopsis, setSynopsis] = useState('')
-    const [numberOfPages, setNumberOfPages] = useState(0)	
+    const [numberOfPages, setNumberOfPages] = useState(0)
     const [authors, setAuthros] = useState<Author[]>([])
     const [categories, setCategories] = useState<Category[]>([])
     const [publisher, setPublisher] = useState<Publisher | undefined>(undefined)
+    const [image, setImage] = useState<File | null>(null)
 
     const [loading, setLoading] = useState(false)
+    const router = useRouter()
 
-    const handleSubmit = (e : React.FormEvent<HTMLFormElement>) => {  
+    const validateForms = () =>{
+        if(!title){
+            toast.error('Debes ingresar un título')
+            return false
+        }
+        if(!synopsis){
+            toast.error('Debes ingresar una sinopsis')
+            return false
+        }
+        if(!numberOfPages){
+            toast.error('Debes ingresar un número de páginas')
+            return false
+        }
+        if(!authors.length){
+            toast.error('Debes seleccionar al menos un autor')
+            return false
+        }
+        if(!categories.length){
+            toast.error('Debes seleccionar al menos una categoría')
+            return false
+        }
+        if(!publisher){
+            toast.error('Debes seleccionar un editor')
+            return false
+        }
+        if(!image){
+            toast.error('Debes seleccionar una imagen')
+            return false
+        }
+        return true
+    }
+
+    const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault()
 
-        if(!publisher){
-            toast.error('Debes seleccionar un editor') 
+        if(!validateForms())
             return
-        }
-        
-        const request : CreateBookRequest = {
+
+        const request: CreateBookRequest = {
             name: title,
             synopsis,
             publishedDate: new Date(),
@@ -43,42 +81,66 @@ export default function CreateBookPage() {
             categories: categories.map(category => category.itemUuid)
         }
         setLoading(true)
-        authAxiosClient.post('/books', request)
-            .then(() => {
-                toast.success('Libro creado')
+        authAxiosClient.post<BaseResponse<Book, string>>('/books', request)
+            .then((response) => {
+                const book = response.data.result
+                authAxiosClient.patchForm(`/books/${book.itemUuid}/cover`, {file : image})
+                    .then(() => {
+                        toast.success('Libro creado')
+                        router.push(`/books/${book.itemUuid}`)
+                    }).catch(() => toast.error('Error al subir la imagen')
+                    ).finally(() => setLoading(false))
             })
             .catch((ex) => {
-                if(ex instanceof AxiosError && ex.status === 401){
-                    toast.error('Error. Debes estar logueado')
-                    return
+                if(ex instanceof AxiosError){
+                    if(ex.status === 400){
+                        toast.error('Error. Datos inválidos')
+                        setLoading(false)
+                        return
+                    }
+                    if(ex.status === 401){
+                        toast.error('Error. Debes estar logueado')
+                        setLoading(false)
+                        return
+                    }
+                    if(ex.status === 409){
+                        toast.error('Error. El libro ya existe')
+                        setLoading(false)
+                        return
+                    }
                 }
 
                 toast.error('Error al crear el libro')
-            })
-            .finally(() => {
                 setLoading(false)
             })
-    }  
+    }
 
-    const handleNumberChange = (e : ChangeEvent<HTMLInputElement>) => {
+    const handleNumberChange = (e: ChangeEvent<HTMLInputElement>) => {
         const value = e.target.value
 
-        if(isNaN(Number(value)) || Number(value) < 0)
+        if (isNaN(Number(value)) || Number(value) < 0)
             return
-        
+
         setNumberOfPages(Number(value))
     }
 
     return (
         <>
             <Toaster position='bottom-right'/>
-            <section className='w-full max-w-5xl place-self-center mt-2 sm:mt-8 p-4'>
+            <section className='flex flex-row gap-4 w-full max-w-5xl place-self-center mt-2 sm:mt-8 p-4'>
+                <picture className={'aspect-portada w-72 h-full truncate rounded-xl shadow-lg'}>
+                    {
+                        book?.coverUrl
+                            ?
+                            <img src={''} alt={'Portada del libro'}/>
+                            :
+                            <div className={'flex items-center justify-center w-full h-full bg-gray-200'}>
+                                <ImageIcon className={'w-12 h-auto'}/>
+                            </div>
+                    }
+
+                </picture>
                 <form onSubmit={handleSubmit} className='flex flex-col sm:flex-row gap-4 w-full items-center'>
-                    <button 
-                        type='button'
-                        className='aspect-portada bg-red-500 max-w-32 w-full sm:max-w-60'>
-                        <img alt='as' className='object-cover w-full sm:w-64' src=''/>
-                    </button>
                     <div className='flex flex-col gap-4 flex-1 w-full'>
                         <BasicTextField
                             label="Titulo"
@@ -91,16 +153,16 @@ export default function CreateBookPage() {
                             label="Sinopsis"
                             variant='outlined'
                             multiline
-                            minRows={5}
-                            maxRows={20}
+                            minRows={2}
+                            maxRows={10}
                         />
-                         <BasicTextField
+                        <BasicTextField
                             type='number'
                             label="Número de páginas"
                             value={numberOfPages}
                             onChange={handleNumberChange}
                         />
-                        <AuthorSearcher selectedAuthors={authors} setSelectedAuthors={setAuthros} />
+                        <AuthorSearcher selectedAuthors={authors} setSelectedAuthors={setAuthros}/>
                         <CategorySearcher
                             selectedCategories={categories}
                             setSelectedCategories={setCategories}
@@ -109,15 +171,15 @@ export default function CreateBookPage() {
                         <PublisherSearcher
                             onChangePublisher={setPublisher}
                         />
-                        
-                        <div className='flex-1 w-full flex items-end justify-center'>
-                        <PrimaryButton basicAttributes={{
-                            type: 'submit',
-                            disabled: loading,
-                            className: `w-1/2`
-                        }}>Guardar</PrimaryButton>
+
+                        <ImageUploadButton onImageChange={setImage}/>
+                        <div className='flex-1 w-full flex items-end justify-center gap-4'>
+                            <PrimaryButton basicAttributes={{
+                                type: 'submit',
+                                disabled: loading,
+                                className: 'w-1/2'
+                            }}>Guardar</PrimaryButton>
                         </div>
-                       
                     </div>
                 </form>
             </section>
