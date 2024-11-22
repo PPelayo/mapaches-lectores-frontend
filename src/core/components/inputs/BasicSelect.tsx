@@ -13,7 +13,9 @@ interface Props<T extends Entity> {
     displayEmpty?: boolean
     items: T[]
     render: (item: T) => React.ReactNode
-    label: string
+    label: string,
+    error? : string | null
+    multiple? : boolean
 }
 
 export default function BasicSelect<T extends Entity>({
@@ -23,6 +25,7 @@ export default function BasicSelect<T extends Entity>({
     items,
     render,
     label,
+    error,
 }: Props<T>) {
     return (
         <>
@@ -39,7 +42,7 @@ export default function BasicSelect<T extends Entity>({
                 <Select
                     labelId={`basic_select_id_${label}`}
                     label={label}
-                    value={value}
+                    value={error ? error : value}
                     displayEmpty={displayEmpty}
                     sx={{
                         '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
@@ -49,7 +52,11 @@ export default function BasicSelect<T extends Entity>({
                     onChange={onChange}
                     className="w-full"
                 >
-                    {items.map((item) => (
+                    
+                    {
+                    error 
+                    ? <MenuItem disabled value={error} className='text-md italic'>{error}</MenuItem>
+                    : items.map((item) => (
                         <MenuItem key={item.itemUuid} value={item.itemUuid}>
                             {render(item)}
                         </MenuItem>

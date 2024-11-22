@@ -24,6 +24,7 @@ export default {
         onSecondaryContainer: "var(--on-secondary-container)",
 
         surface : "var(--surface)",
+        surfaceVariant : "var(--surface-variant)",
         background: "var(--background)",
       },
     },

@@ -4,9 +4,9 @@ import BasicSelect from '@/core/components/inputs/BasicSelect'
 import { baseAxiosClient } from '@/features/auth/axios/axiosClient'
 import BaseResponse from '@/core/definitinos/BaseResponse'
 import PaginationResult from '@/core/definitinos/PaginationResult'
-import BasicLoader from '@/core/components/loaders/BasicLoader'
 import { SelectChangeEvent } from '@mui/material'
 import BasicChip from '@/core/components/chips/BasicChip'
+import TextFieldSkeleton from '@/core/components/inputs/TextFieldSkeleton'
 
 interface Props {
     selectedCategories: Category[]
@@ -17,7 +17,7 @@ export default function CategorySearcher({
     selectedCategories,
     setSelectedCategories,
 }: Props) {
-    const [loading, setLoading] = useState(false)
+    const [loading, setLoading] = useState(true)
     const [error, setError] = useState<null | string>(null)
 
     const [allCategories, setAllCategories] = useState<Category[]>([])
@@ -33,6 +33,7 @@ export default function CategorySearcher({
     }, [allCategories, selectedCategories])
 
     useEffect(() => {
+        setLoading(true)
         baseAxiosClient
             .get<BaseResponse<PaginationResult<Category>, string>>(
                 '/categories'
@@ -79,18 +80,19 @@ export default function CategorySearcher({
                 }
             </section>
             <div className="w-full">
-                {error && (
-                    <div className="text-md italic text-center">{error}</div>
-                )}
-                <BasicLoader loading={loading}>
+                {
+                    loading
+                    ? <TextFieldSkeleton/>
+                    : 
                     <BasicSelect
                         label='Categorias'
                         items={categoriesToShow}
                         onChange={handleItemSelected}
                         render={(category) => category.description}
                         value=""
+                        error={error}
                     />
-                </BasicLoader>
+                }
             </div>
         </div>
     )

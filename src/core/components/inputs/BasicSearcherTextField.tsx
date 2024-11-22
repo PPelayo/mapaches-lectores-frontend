@@ -14,6 +14,8 @@ export type BasicSearchTextFieldProps<T extends Entity> = {
     value : string,
     onValueChange : (value : string) => void,
     isSearching? : boolean
+    onLoadResults? : (results : T[]) => void,
+    externalError? : string | null
 }
 
 export default function BasicSearcherTextField<T extends Entity>({
@@ -24,7 +26,9 @@ export default function BasicSearcherTextField<T extends Entity>({
     onItemClick,
     value,
     onValueChange,
-    isSearching = true
+    isSearching = true,
+    onLoadResults,
+    externalError
 }: BasicSearchTextFieldProps<T>) {
     const [showSearch, setShowSearch] = useState(false)
     const [menuDirection, setMenuDirection] = useState<'up' | 'down'>('down') // Dirección del menú
@@ -52,7 +56,7 @@ export default function BasicSearcherTextField<T extends Entity>({
 
     useEffect(() => {
         if(isSearching) debouncedSearch(value)
-    }, [value, debouncedSearch])
+    }, [value, debouncedSearch, isSearching])
 
     const handleItemSelected = (item: T) => {
         // setSelectedItems([...selectedItems, item])
@@ -95,10 +99,15 @@ export default function BasicSearcherTextField<T extends Entity>({
         }
     }, [showSearch])
 
+    useEffect(() => {
+        onLoadResults?.(results)
+    },[results, onLoadResults])
+
     return (
         <>
             <div ref={containerRef} className="relative">
                 <BasicTextField
+                    error={!!externalError}
                     autoComplete="off"
                     label={label}
                     maxRows={1}
@@ -111,7 +120,7 @@ export default function BasicSearcherTextField<T extends Entity>({
                 {showSearch && (
                     <>
                         {error && (
-                            <span className="text-sm italic opacity-90">
+                            <span className="text-md italic opacity-90">
                                 Error al obtener los datos.
                             </span>
                         )}
