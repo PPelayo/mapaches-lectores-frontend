@@ -18,7 +18,8 @@ export default function MainHeader() {
             </header>
             <SubHeader />
             <div className='w-full px-4 py-2 bg-secondaryContainer block sm:hidden'>
-                <SearchInput/>
+                {/*<SearchInput/>*/}
+                <SearcherHeader/>
             </div>
         </div>
     )

@@ -6,6 +6,7 @@ import { AxiosError } from "axios"
 import PaginationResult from "@/core/definitinos/PaginationResult"
 import ShowReviews from "@/features/reviews/components/ShowReviews"
 import { Review } from "@/features/reviews/definitions/review"
+import CoverBook from "@/features/books/components/CoverBook";
 
 interface Props {
     bookId: string
@@ -44,14 +45,15 @@ export default async function BookPage({ bookId }: Props) {
         <>
             <div className="flex flex-col gap-8 p-4 h-max max-w-7xl place-self-center w-full">
                 <section className="flex flex-row gap-12">
-                    <picture className="flex justify-center aspect-portada border-2 rounded-lg overflow-hidden shadow-lg transition-transform duration-200 ease-in-out hover:scale-[1.02]">
-                        <img
-                            loading="lazy"
-                            className="object-cover w-64"
-                            src={book.coverUrl}
-                            alt="book"
-                        />
-                    </picture>
+                    {/*<picture className="flex justify-center aspect-portada border-2 rounded-lg overflow-hidden shadow-lg transition-transform duration-200 ease-in-out hover:scale-[1.02]">*/}
+                    {/*    <img*/}
+                    {/*        loading="lazy"*/}
+                    {/*        className="object-cover w-64"*/}
+                    {/*        src={book.coverUrl}*/}
+                    {/*        alt="book"*/}
+                    {/*    />*/}
+                    {/*</picture>*/}
+                    <CoverBook cover={book.coverUrl} className={'w-64 rounded-lg  truncate hadow-lg'}/>
                     <article className="flex flex-col gap-4">
                         <header>
                             <h1 className="text-2xl font-bold uppercase">
