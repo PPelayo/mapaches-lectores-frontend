@@ -15,7 +15,9 @@ export type BasicSearchTextFieldProps<T extends Entity> = {
     onValueChange : (value : string) => void,
     isSearching? : boolean
     onLoadResults? : (results : T[]) => void,
-    externalError? : string | null
+    externalError? : string | null,
+    className? : string,
+    placeholder? : string
 }
 
 export default function BasicSearcherTextField<T extends Entity>({
@@ -28,7 +30,9 @@ export default function BasicSearcherTextField<T extends Entity>({
     onValueChange,
     isSearching = true,
     onLoadResults,
-    externalError
+    externalError,
+    className = 'w-full',
+    placeholder
 }: BasicSearchTextFieldProps<T>) {
     const [showSearch, setShowSearch] = useState(false)
     const [menuDirection, setMenuDirection] = useState<'up' | 'down'>('down') // Dirección del menú
@@ -105,13 +109,14 @@ export default function BasicSearcherTextField<T extends Entity>({
 
     return (
         <>
-            <div ref={containerRef} className="relative">
+            <div ref={containerRef} className={`relative ${className}`}>
                 <BasicTextField
+                    placeholder={placeholder}
                     error={!!externalError}
                     autoComplete="off"
                     label={label}
                     maxRows={1}
-                    className="w-full"
+                    className={'w-full'}
                     value={value}
                     onChange={(e) => onValueChange(e.target.value)}
                     onFocus={() => setShowSearch(true)}

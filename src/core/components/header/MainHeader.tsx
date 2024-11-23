@@ -1,14 +1,16 @@
 import SearchIcon from '../icons/SearchIcon'
 import ButtonCuenta from './ButtonCuenta'
 import SubHeader from './SubHeader'
+import Link from "next/link";
+import SearcherHeader from "@/core/components/header/SearcherHeader";
 
 export default function MainHeader() {
     return (
         <div className="flex flex-col sticky top-0 left-0 right-0 z-10">
             <header className="w-full text-md sm:text-lg bg-primaryContainer min-h-12 flex flex-row items-center justify-between px-4 py-2">
-                <div className="border rounded-lg ">ZONA DEL LOGO</div>
+                <Link href={'/'} className="border rounded-lg cursor-pointer">ZONA DEL LOGO</Link>
                 <div className='hidden sm:block h-full'>
-                    <SearchInput/>
+                    <SearcherHeader/>
                 </div>
                 <section>
                     <ButtonCuenta/>
