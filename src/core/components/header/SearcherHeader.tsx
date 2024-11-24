@@ -29,7 +29,8 @@ export default function SearcherHeader(){
         if(value){
             router.push(`/search?q=${value}`)
             setShowSearch(false)
-        }
+        } else
+            router.push('/')
     }
 
     return (
