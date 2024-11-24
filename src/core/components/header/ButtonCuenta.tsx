@@ -22,12 +22,11 @@ export default function ButtonCuenta() {
         authAxiosClient
             .get<BaseResponse<User, string>>('/user/me')
             .then(({ data }) => {
-                setLoading(false)
                 setUser(data.result)
             })
             .catch((err) => {
                 console.error('Error al obtener los datos', err)
-                deleteTokens()
+                // deleteTokens()
             })
             .finally(() => {
                 setLoading(false)
@@ -96,7 +95,7 @@ function ButtonWithLogin({ user }: { user: User }) {
                     <MenuItems
                         anchor="bottom"
                         className={
-                            'mt-2 absolute border border-onPrimaryContainer bg-primaryContainer rounded-lg shadow-xl flex flex-col text-onSecondary shadow-gray-400'
+                            'z-30 mt-2 absolute border border-onPrimaryContainer bg-primaryContainer rounded-lg shadow-xl flex flex-col text-onSecondary shadow-gray-400'
                         }
                     >
                         <MenuItem
