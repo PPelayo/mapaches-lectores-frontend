@@ -1,7 +1,7 @@
 import BaseResponse from "@/core/definitinos/BaseResponse";
 import PaginationResult from "@/core/definitinos/PaginationResult";
-import { baseAxiosClient } from "@/features/auth/axios/axiosClient";
-import { useCallback, useState } from "react";
+import {baseAxiosClient} from "@/features/auth/axios/axiosClient";
+import {useCallback, useState} from "react";
 
 const MAX_LIMIT = 5
 

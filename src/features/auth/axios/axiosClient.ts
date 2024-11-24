@@ -1,6 +1,6 @@
-import axios, { AxiosError, AxiosRequestConfig } from "axios";
+import axios, {AxiosError, AxiosRequestConfig} from "axios";
 import https from "https";
-import { getTokens, saveTokens } from "../services/tokenService";
+import {getTokens, saveTokens} from "../services/tokenService";
 import BaseResponse from "@/core/definitinos/BaseResponse";
 
 export const baseAxiosClient = axios.create({

@@ -1,11 +1,11 @@
 import BaseResponse from "@/core/definitinos/BaseResponse"
-import { baseAxiosClient } from "@/features/auth/axios/axiosClient"
+import {baseAxiosClient} from "@/features/auth/axios/axiosClient"
 import UploadReviewForm from "@/features/reviews/components/UploadReviewForm"
-import { Book } from "../definitions/Book"
-import { AxiosError } from "axios"
+import {Book} from "../definitions/Book"
+import {AxiosError} from "axios"
 import PaginationResult from "@/core/definitinos/PaginationResult"
 import ShowReviews from "@/features/reviews/components/ShowReviews"
-import { Review } from "@/features/reviews/definitions/review"
+import {Review} from "@/features/reviews/definitions/review"
 import CoverBook from "@/features/books/components/CoverBook";
 
 interface Props {

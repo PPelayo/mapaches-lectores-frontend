@@ -1,11 +1,11 @@
-import { useState } from "react"
-import { baseAxiosClient } from "../axios/axiosClient"
+import {useState} from "react"
+import {baseAxiosClient} from "../axios/axiosClient"
 import BaseResponse from "@/core/definitinos/BaseResponse"
 import RegisterResponse from "../definitions/registerResponse"
-import { saveTokens } from "../services/tokenService"
+import {saveTokens} from "../services/tokenService"
 import RegisterRequest from "../definitions/registerRequest"
-import { AxiosError } from "axios"
-import { useUserStore } from "../services/useUserStore"
+import {AxiosError} from "axios"
+import {useUserStore} from "../services/useUserStore"
 
 export function useRegister() {
 

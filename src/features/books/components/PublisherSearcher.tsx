@@ -1,6 +1,6 @@
 import BasicSearcherTextField from "@/core/components/inputs/BasicSearcherTextField";
-import { useState } from "react";
-import { Publisher } from "../definitions/Publisher";
+import {useState} from "react";
+import {Publisher} from "../definitions/Publisher";
 
 interface Props {
     onChangePublisher : (publisher : Publisher) => void

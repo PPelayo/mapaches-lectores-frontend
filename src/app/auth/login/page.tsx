@@ -5,9 +5,9 @@ import BasicInput from '@/core/components/inputs/BasicInput'
 import LoginRequest from '@/features/auth/definitions/loginRequest'
 import useLogin from '@/features/auth/hooks/useLogin'
 import Link from 'next/link'
-import { useRouter } from 'next/navigation'
-import { useEffect } from 'react'
-import toast, { Toaster } from 'react-hot-toast'
+import {useRouter} from 'next/navigation'
+import {useEffect} from 'react'
+import toast, {Toaster} from 'react-hot-toast'
 
 export default function Login() {
     const { error, loading, login, success } = useLogin()

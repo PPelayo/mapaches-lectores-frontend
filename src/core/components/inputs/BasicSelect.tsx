@@ -1,11 +1,5 @@
 import Entity from '@/core/definitinos/Entity'
-import {
-    FormControl,
-    InputLabel,
-    MenuItem,
-    Select,
-    SelectChangeEvent,
-} from '@mui/material'
+import {FormControl, InputLabel, MenuItem, Select, SelectChangeEvent,} from '@mui/material'
 
 interface Props<T extends Entity> {
     value: string

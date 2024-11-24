@@ -3,12 +3,12 @@
 import PrimaryButton from '@/core/components/buttons/PrimaryButton'
 import BasicInput from '@/core/components/inputs/BasicInput'
 import RegisterRequest from '@/features/auth/definitions/registerRequest'
-import { useRegister } from '@/features/auth/hooks/useRegister'
-import { useUserStore } from '@/features/auth/services/useUserStore'
+import {useRegister} from '@/features/auth/hooks/useRegister'
+import {useUserStore} from '@/features/auth/services/useUserStore'
 import Link from 'next/link'
-import { useRouter } from 'next/navigation'
-import { useEffect } from 'react'
-import toast, { Toaster } from 'react-hot-toast'
+import {useRouter} from 'next/navigation'
+import {useEffect} from 'react'
+import toast, {Toaster} from 'react-hot-toast'
 
 export default function Register() {
 

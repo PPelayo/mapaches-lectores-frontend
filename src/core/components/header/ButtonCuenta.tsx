@@ -2,21 +2,14 @@
 
 import Link from 'next/link'
 import UserIcon from '../icons/UserIcon'
-import { useUserStore } from '@/features/auth/services/useUserStore'
-import { Fragment, useEffect, useState } from 'react'
-import { deleteTokens, getTokens } from '@/features/auth/services/tokenService'
+import {useUserStore} from '@/features/auth/services/useUserStore'
+import {Fragment, useEffect, useState} from 'react'
+import {deleteTokens, getTokens} from '@/features/auth/services/tokenService'
 import BasicLoader from '../loaders/BasicLoader'
-import { authAxiosClient } from '@/features/auth/axios/axiosClient'
+import {authAxiosClient} from '@/features/auth/axios/axiosClient'
 import BaseResponse from '@/core/definitinos/BaseResponse'
 import User from '@/features/auth/definitions/user'
-import {
-    Menu,
-    MenuButton,
-    MenuItem,
-    MenuItems,
-    MenuSeparator,
-    Transition,
-} from '@headlessui/react'
+import {Menu, MenuButton, MenuItem, MenuItems, MenuSeparator, Transition,} from '@headlessui/react'
 
 export default function ButtonCuenta() {
     const { user, setUser } = useUserStore()

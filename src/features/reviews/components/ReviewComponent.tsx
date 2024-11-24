@@ -1,8 +1,8 @@
-import { useMemo } from "react";
-import { Review } from "../definitions/review";
+import {useMemo} from "react";
+import {Review} from "../definitions/review";
 import dayjs from 'dayjs'
 import utc from 'dayjs/plugin/utc'
-import { Rating } from "@mui/material";
+import {Rating} from "@mui/material";
 
 interface Props {
     review : Review

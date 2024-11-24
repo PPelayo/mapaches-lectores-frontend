@@ -1,5 +1,5 @@
 import User from "@/features/auth/definitions/user"
-import { Response } from "@/core/definitinos/BaseResponse"
+import {Response} from "@/core/definitinos/BaseResponse"
 
 
 export interface Review extends Response {

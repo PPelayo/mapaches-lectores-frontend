@@ -1,6 +1,6 @@
 import Entity from '@/core/definitinos/Entity'
 import BasicSearcherTextField from './BasicSearcherTextField'
-import { useState } from 'react'
+import {useState} from 'react'
 
 export type MultiSearchTextFieldProps<T extends Entity> = {
     selectedItems: T[]

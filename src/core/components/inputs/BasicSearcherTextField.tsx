@@ -1,6 +1,6 @@
-import { useEffect, useMemo, useRef, useState } from 'react'
+import {useEffect, useMemo, useRef, useState} from 'react'
 import useSearcher from '@/core/hooks/useSearcher'
-import { debounce } from '@mui/material'
+import {debounce} from '@mui/material'
 import BasicLoader from '../loaders/BasicLoader'
 import BasicTextField from './BasicTextField'
 import Entity from '@/core/definitinos/Entity'

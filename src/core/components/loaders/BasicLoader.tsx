@@ -1,6 +1,6 @@
-import { ReactNode } from "react"
-import { PulseLoader } from "react-spinners"
-import { LoaderSizeMarginProps } from "react-spinners/helpers/props"
+import {ReactNode} from "react"
+import {PulseLoader} from "react-spinners"
+import {LoaderSizeMarginProps} from "react-spinners/helpers/props"
 
 interface Props extends React.HTMLAttributes<HTMLDivElement> {
     loading : boolean,

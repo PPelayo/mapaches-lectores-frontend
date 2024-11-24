@@ -1,4 +1,5 @@
 import ImageIcon from "@/core/components/icons/ImageIcon";
+
 interface Props {
     cover? : string | null,
     className? : string

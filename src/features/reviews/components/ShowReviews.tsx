@@ -1,11 +1,11 @@
 'use client'
 
 import PaginationResult from '@/core/definitinos/PaginationResult'
-import { Review } from '../definitions/review'
+import {Review} from '../definitions/review'
 import ReviewComponent from './ReviewComponent'
-import { useEffect, useState } from 'react'
+import {useEffect, useState} from 'react'
 import BasicLoader from '@/core/components/loaders/BasicLoader'
-import { baseAxiosClient } from '@/features/auth/axios/axiosClient'
+import {baseAxiosClient} from '@/features/auth/axios/axiosClient'
 import FullError from '@/core/components/errors/FullError'
 import BaseResponse from '@/core/definitinos/BaseResponse'
 

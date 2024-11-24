@@ -1,4 +1,4 @@
-import { Chip, ChipProps } from '@mui/material'
+import {Chip, ChipProps} from '@mui/material'
 
 
 export default function BasicChip(props : ChipProps) {
