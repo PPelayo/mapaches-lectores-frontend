@@ -34,9 +34,11 @@ export default function SearcherBooks({ initialFetch } : Props){
 
         //Si no ha usado el fetch inicial y este existe, no hace nada, de forma que cuando cambio el searchParams la segunda vez si hace un clear y un loadMore
         if (!hasUsedInitialFetch.current && initialFetch) {
+            console.log('evitando hacer el fetch')
             hasUsedInitialFetch.current = true
             return
         }
+        console.log('haciendo el fetch')
         clear()
         loadMore(query, 0)
     }, [searchParams, initialFetch]);

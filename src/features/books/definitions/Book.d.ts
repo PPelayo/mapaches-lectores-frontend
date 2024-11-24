@@ -13,7 +13,9 @@ export interface Book {
     authors: Author[]
     createdAt: string
     updatedAt: string
-    itemUuid: string
+    itemUuid: string,
+    reviewsAvarage : number,
+    reviewsCount : number
   }
   export interface CreateBookRequest {
     name: string

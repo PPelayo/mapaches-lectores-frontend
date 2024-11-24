@@ -2,6 +2,7 @@
 
 import {Book} from "@/features/books/definitions/Book";
 import CoverBook from "@/features/books/components/CoverBook";
+import {Rating} from "@mui/material";
 
 interface  Props {
     book : Book,
@@ -28,7 +29,13 @@ export default function BookCard ({ book, onClick } : Props) {
                         </span>
                     ))
                 }</h6>
-                <section className="w-full text-right">4,4 - 3 valoraciones</section>
+                <section className="w-full text-right flex flex-row gap-2 justify-end">
+                    <Rating
+                        value={book.reviewsAvarage}
+                        readOnly
+                    />
+                    <span>({book.reviewsCount})</span>
+                </section>
             </div>
         </article>
     )
