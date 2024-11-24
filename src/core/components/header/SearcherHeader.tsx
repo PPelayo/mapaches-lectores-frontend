@@ -40,7 +40,6 @@ export default function SearcherHeader(){
                 onSubmit={handleSubmit}>
                 <BasicSearcherTextField
                     placeholder="Libro, autor"
-                    selectedItems={[]}
                     urlSearch={'/books'}
                     renderItem={
                         (book) => <BookRender book={book} />

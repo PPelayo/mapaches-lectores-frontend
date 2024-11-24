@@ -6,7 +6,7 @@ import BasicTextField from './BasicTextField'
 import Entity from '@/core/definitinos/Entity'
 
 export type BasicSearchTextFieldProps<T extends Entity> = {
-    selectedItems: T[]
+    selectedItems?: T[]
     label?: string
     urlSearch: string
     renderItem: (item: T) => React.ReactNode,
@@ -23,7 +23,7 @@ export type BasicSearchTextFieldProps<T extends Entity> = {
 }
 
 export default function BasicSearcherTextField<T extends Entity>({
-    selectedItems,
+    selectedItems = [],
     label,
     urlSearch,
     renderItem,

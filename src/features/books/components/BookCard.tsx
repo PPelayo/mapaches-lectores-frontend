@@ -1,13 +1,34 @@
-export default function BookCard () {
+'use client'
+
+import {Book} from "@/features/books/definitions/Book";
+import CoverBook from "@/features/books/components/CoverBook";
+
+interface  Props {
+    book : Book,
+    onClick? : (book : Book) => void
+}
+
+export default function BookCard ({ book, onClick } : Props) {
+
     return (
-        <article className="flex-grow-0 flex-shrink-0 border-2 rounded-lg w-52 flex flex-col gap-1 cursor-pointer bg-primaryConatiner transition-all duration-300 hover:border-secondary scroll-px-4">
-            <picture className="aspect-portada rounded-t-lg overflow-hidden">
-                <img className="object-cover w-full h-full" alt="Alas de sangre" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTV_MLFoyKI3SE5R4vS1A7riLHUKH0PacALqA&s"></img>
-            </picture>
-            <div className="flex flex-col gap-0 items-center">
-                <h2 className="text-2xl font-bold">Titulo</h2>
-                <h6 className="italic">Autor</h6>
-                <section className="w-full px-2 text-right">4,4 - 3 valoraciones</section>
+        <article
+            onClick={() => onClick && onClick(book)}
+            className="shadow-lg border rounded-lg truncate flex flex-col">
+            <CoverBook
+                cover={book.coverUrl}
+                className={'w-full'}
+            />
+            <div className="flex flex-col gap-0 items-center px-2 py-1 truncate">
+                <h2 className="text-lg sm:text-xl font-bold">{book.name}</h2>
+                <h6 className="italic md:text-lg">{
+                    book.authors.map((author, index) => (
+                        <span key={author.itemUuid}>
+                            {`${author.name} ${author.lastName}`}
+                            {index < book.authors.length - 1 ? ', ' : ''}
+                        </span>
+                    ))
+                }</h6>
+                <section className="w-full text-right">4,4 - 3 valoraciones</section>
             </div>
         </article>
     )
