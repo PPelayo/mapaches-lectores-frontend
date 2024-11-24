@@ -5,17 +5,19 @@ import {FormEvent, useCallback, useState} from 'react'
 import {CreateReviewsRequest} from '../definitions/createReviewsRequest'
 import toast, {Toaster} from 'react-hot-toast'
 import {AxiosError} from 'axios'
-import {Rating} from '../definitions/review'
+import {Rating, Review} from '../definitions/review'
 import {Rating as RatingMui, TextField} from '@mui/material'
 import {motion} from 'motion/react'
 import {useUserStore} from '@/features/auth/services/useUserStore'
 import {useRouter} from 'next/navigation'
+import BaseResponse from "@/core/definitinos/BaseResponse";
 
 interface Props {
-    bookId: string
+    bookId: string,
+    onReviewCreated? : (review : Review) => void
 }
 
-export default function UploadReviewForm({ bookId }: Props) {
+export default function UploadReviewForm({ bookId, onReviewCreated }: Props) {
     const [showButtons, setShowButtons] = useState(false)
     const [comment, setComment] = useState('')
     const [title, setTitle] = useState('')
@@ -48,10 +50,11 @@ export default function UploadReviewForm({ bookId }: Props) {
         }
 
         authAxiosClient
-            .post(`/books/${bookId}/reviews`, req)
-            .then(() => {
+            .post<BaseResponse<Review, string>>(`/books/${bookId}/reviews`, req)
+            .then((result) => {
                 toast.success('Comentario enviado correctamente')
                 resetForm()
+                onReviewCreated?.(result.data.result)
             })
             .catch((ex) => {
                 if (ex instanceof AxiosError) {

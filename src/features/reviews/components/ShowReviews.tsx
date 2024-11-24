@@ -3,7 +3,7 @@
 import PaginationResult from '@/core/definitinos/PaginationResult'
 import {Review} from '../definitions/review'
 import ReviewComponent from './ReviewComponent'
-import {useEffect, useState} from 'react'
+import {useEffect, useMemo, useState} from 'react'
 import BasicLoader from '@/core/components/loaders/BasicLoader'
 import {baseAxiosClient} from '@/features/auth/axios/axiosClient'
 import FullError from '@/core/components/errors/FullError'
@@ -11,17 +11,22 @@ import BaseResponse from '@/core/definitinos/BaseResponse'
 
 interface Props {
     iniitalReviews?: PaginationResult<Review>
-    bookId: string
+    bookId: string,
+    reviewsToHidden? : Review[] | null
 }
 
 const REVIEWS_LIMIT = 15
 
-export default function ShowReviews({ iniitalReviews, bookId }: Props) {
+export default function ShowReviews({ iniitalReviews, bookId, reviewsToHidden }: Props) {
     const [loading, setLoading] = useState(false)
     const [offset, setOffset] = useState(0)
     const [reviews, setReviews] = useState<Review[]>(iniitalReviews?.data || [])
     const [error, setError] = useState<string | null>(null)
     const [hasMore, setHasMore] = useState<boolean>(iniitalReviews?.hasNext || true)
+
+    const reviewsToShow = useMemo(() => {
+        return reviews.filter((review) => !reviewsToHidden?.find((r) => r.itemUuid === review.itemUuid))
+    },[reviewsToHidden, reviews])
 
     useEffect(() => {
         setLoading(true)
@@ -54,7 +59,7 @@ export default function ShowReviews({ iniitalReviews, bookId }: Props) {
         <>
             <FullError error={error}>
                 <section className="grid grid-cols-1 gap-4 md:">
-                    {reviews.map((review) => (
+                    {reviewsToShow.map((review) => (
                         <ReviewComponent
                             review={review}
                             key={review.itemUuid}
