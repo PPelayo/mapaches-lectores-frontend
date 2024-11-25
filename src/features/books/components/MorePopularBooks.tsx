@@ -4,6 +4,8 @@ import BaseResponse from "@/core/definitinos/BaseResponse"
 import PaginationResult from "@/core/definitinos/PaginationResult"
 import BookCard from "./BookCard"
 import FullError from "@/core/components/errors/FullError"
+import BookCardSkeleton from "@/features/books/components/BookCardSkeleton";
+import MorePopularBooksCarousel from "@/features/books/components/MorePopularBooksCarousel";
 
 export default async function MorePopularBooks() {
 
@@ -25,18 +27,19 @@ export default async function MorePopularBooks() {
         error = 'Ocurrió un error al intentar recuperar los libros'
     }
 
-
     return (
         <FullError error={error}>
             <section className="flex flex-col gap-1 py-2 px-4 mt-2">
                 <h2 className="text-2xl font-bold">Libros más populares</h2>
-                <div className="flex flex-row gap-4 overflow-x-auto overflow-y-hidden py-2">
-                    {
-                        books.map((book) => (
-                            <BookCard book={book} key={book.itemUuid} />
-                        ))
-                    }
-                </div>
+                    {/*<BookCardSkeleton/>*/}
+                {/*<div className="flex flex-row flex-nowrap gap-4 overflow-x-auto overflow-y-hidden py-2">*/}
+                {/*    {*/}
+                {/*        books.map((book) => (*/}
+                {/*            <BookCard book={book} key={book.itemUuid} />*/}
+                {/*        ))*/}
+                {/*    }*/}
+                {/*</div>*/}
+                <MorePopularBooksCarousel books={books} />
             </section>
         </FullError>
 
