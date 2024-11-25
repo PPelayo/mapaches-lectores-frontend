@@ -6,8 +6,10 @@ import BaseResponse from "@/core/definitinos/BaseResponse";
 export const baseAxiosClient = axios.create({
     baseURL: process.env.NEXT_PUBLIC_API_URL,
     httpAgent: new https.Agent({
-        rejectUnauthorized: false
-    })
+        rejectUnauthorized: false,
+    }),
+    insecureHTTPParser: true
+    
 })
 
 export const authAxiosClient = axios.create({
