@@ -1,12 +1,12 @@
 import axios, {AxiosError, AxiosRequestConfig} from "axios";
-import https from "https";
+import http from "http"
 import {getTokens, saveTokens} from "../services/tokenService";
 import BaseResponse from "@/core/definitinos/BaseResponse";
 
 export const baseAxiosClient = axios.create({
     baseURL: process.env.NEXT_PUBLIC_API_URL,
-    httpAgent: new https.Agent({
-        rejectUnauthorized: false,
+    httpAgent: new http.Agent({
+        
     }),
     insecureHTTPParser: true
     
@@ -14,8 +14,7 @@ export const baseAxiosClient = axios.create({
 
 export const authAxiosClient = axios.create({
     baseURL: process.env.NEXT_PUBLIC_API_URL,
-    httpAgent: new https.Agent({
-        rejectUnauthorized: false
+    httpAgent: new http.Agent({
     })
 })
 
