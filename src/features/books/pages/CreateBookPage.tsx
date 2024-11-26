@@ -17,6 +17,7 @@ import ImageUploadButton from '../components/ImageUploadButton'
 import ImageIcon from "@/core/components/icons/ImageIcon";
 import BaseResponse from "@/core/definitinos/BaseResponse";
 import {useRouter} from "next/navigation";
+import CoverBook from '../components/CoverBook'
 
 export default function CreateBookPage() {
 
@@ -127,19 +128,8 @@ export default function CreateBookPage() {
     return (
         <>
             <Toaster position='bottom-right'/>
-            <section className='flex flex-row gap-4 w-full max-w-5xl place-self-center mt-2 sm:mt-8 p-4'>
-                <picture className={'aspect-portada w-72 h-full truncate rounded-xl shadow-lg'}>
-                    {
-                        book?.coverUrl
-                            ?
-                            <img src={''} alt={'Portada del libro'}/>
-                            :
-                            <div className={'flex items-center justify-center w-full h-full bg-gray-200'}>
-                                <ImageIcon className={'w-12 h-auto'}/>
-                            </div>
-                    }
-
-                </picture>
+            <section className='flex flex-col sm:flex-row gap-4 w-full max-w-5xl place-self-center mt-2 sm:mt-8 p-4'>
+                <CoverBook cover={book?.coverUrl} className='w-full sm:w-72 truncate rounded-xl shadow-lg h-min'/>
                 <form onSubmit={handleSubmit} className='flex flex-col sm:flex-row gap-4 w-full items-center'>
                     <div className='flex flex-col gap-4 flex-1 w-full'>
                         <BasicTextField
