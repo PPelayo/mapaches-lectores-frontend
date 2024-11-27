@@ -8,6 +8,7 @@ import PaginationResult from "@/core/definitinos/PaginationResult";
 import {useEffect, useRef} from "react";
 import {useSearchParams} from "next/navigation";
 import FullError from "@/core/components/errors/FullError";
+import Link from "next/link";
 
 interface  Props {
     initialFetch? : PaginationResult<Book>
@@ -51,7 +52,9 @@ export default function SearcherBooks({ initialFetch } : Props){
                         className={'flex-1 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 xl:grid-cols-5 gap-4 p-2 md:p-4 items-center w-full'}>
                         {
                             books.map((book) => (
-                                <BookCard book={book} key={book.itemUuid}/>
+                                <Link href={`books/${book.itemUuid}`}>
+                                    <BookCard book={book} key={book.itemUuid}/>
+                                </Link>
                             ))
                         }
                     </section>
