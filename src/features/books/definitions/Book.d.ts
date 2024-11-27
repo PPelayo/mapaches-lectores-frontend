@@ -26,4 +26,6 @@ export interface Book {
     authors: string[]
     categories: string[]
   }
+
+  export type OrderBook = "Default" | "Popular" | "NameAsc" | "NameDesc"
   

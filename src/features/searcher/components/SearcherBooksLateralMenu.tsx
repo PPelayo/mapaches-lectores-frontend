@@ -1,28 +1,30 @@
 'use client'
 
-import {categoryRepository} from "@/features/categories/lib/repository/CategoryRepository";
+import { categoryRepository } from "@/features/categories/lib/repository/CategoryRepository";
 import FullError from "@/core/components/errors/FullError";
 import Link from "next/link";
-import {useEffect, useMemo, useState} from "react";
+import { useEffect, useMemo, useState } from "react";
 import Category from "@/features/books/definitions/Category";
 import BasicLoader from "@/core/components/loaders/BasicLoader";
+import { useSearchParams } from "next/navigation";
 
 export default function SearcherBooksLateralMenu() {
-
-    const [categories, setCategories] = useState<Category[]>([])
-    const [loading, setLoading] = useState(false)
-    const [error, setError] = useState<string | undefined>(undefined)
+    const [categories, setCategories] = useState<Category[]>([]);
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState<string | undefined>(undefined);
+    const searchParams = useSearchParams();
+    const selectedCategory = searchParams.get('category');
 
     useEffect(() => {
-        setLoading(true)
+        setLoading(true);
         categoryRepository.getAll()
             .then((categories) => {
                 if (categories.length === 0)
-                    setError('No se han podido cargar las categorias')
+                    setError('No se han podido cargar las categorias');
 
-                setCategories(categories)
+                setCategories(categories);
             })
-            .finally(() => setLoading(false))
+            .finally(() => setLoading(false));
     }, []);
 
     return (
@@ -38,7 +40,11 @@ export default function SearcherBooksLateralMenu() {
                         <ul>
                             {
                                 categories.map((category) => (
-                                    <CategorieItem category={category} key={category.id}/>
+                                    <CategorieItem
+                                        category={category}
+                                        key={category.id}
+                                        isSelected={category.description === selectedCategory}
+                                    />
                                 ))
                             }
                         </ul>
@@ -49,21 +55,22 @@ export default function SearcherBooksLateralMenu() {
     );
 }
 
-function CategorieItem({category}: { category: Category }) {
-
+function CategorieItem({ category, isSelected }: { category: Category, isSelected: boolean }) {
     const url = useMemo(() => {
         const currentUrl = new URL(window.location.href);
         currentUrl.searchParams.set('category', category.description);
         return currentUrl.toString();
-    }, [category])
+    }, [category]);
 
     return (
         <>
             <li>
-                <Link href={url} className={'px-2 py-1 transition-colors ease-in hover:bg-primary hover:text-background cursor-pointer flex'}>
+                <Link
+                    className={`px-2 py-1 rounded-lg transition-colors ease-in hover:bg-primary hover:text-background cursor-pointer flex ${isSelected ? 'bg-primary text-background' : ''}`}
+                    href={url}>
                     {category.description}
                 </Link>
             </li>
         </>
-    )
+    );
 }
