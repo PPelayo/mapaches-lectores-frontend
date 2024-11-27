@@ -14,9 +14,9 @@ interface  Props {
     initialFetch? : PaginationResult<Book>
 }
 
-const BOOKS_PER_FETCH = 1
+const BOOKS_PER_FETCH = 10
 
-export default function SearcherBooks({ initialFetch } : Props){
+export default function SearcherBooksClient({ initialFetch } : Props){
 
     const searchParams = useSearchParams()
     const {
@@ -49,11 +49,11 @@ export default function SearcherBooks({ initialFetch } : Props){
             <FullError error={error}>
                 <div className={'flex flex-col gap-4 items-center'}>
                     <section
-                        className={'flex-1 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 xl:grid-cols-5 gap-4 p-2 md:p-4 items-center w-full'}>
+                        className={'flex-1 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 xl:grid-cols-5 gap-4 px-2 items-center w-full'}>
                         {
                             books.map((book) => (
-                                <Link href={`/books/${book.itemUuid}`}>
-                                    <BookCard book={book} key={book.itemUuid}/>
+                                <Link href={`/books/${book.itemUuid} `} key={book.itemUuid}>
+                                    <BookCard book={book} />
                                 </Link>
                             ))
                         }

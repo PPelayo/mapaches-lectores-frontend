@@ -5,26 +5,12 @@ import { baseAxiosClient } from "@/features/auth/axios/axiosClient"
 import PaginationResult from "@/core/definitinos/PaginationResult"
 import BaseResponse from "@/core/definitinos/BaseResponse"
 import MorePopularBooksCarousel from "@/features/books/components/MorePopularBooksCarousel";
+import {categoryRepository} from "@/features/categories/lib/repository/CategoryRepository";
 
 export default async function CategoriesCarouselServer(){
 
-    let categories : Category[] = []
-    let error : string | undefined = undefined
-    try{
-
-        const res = await baseAxiosClient.get<BaseResponse<PaginationResult<Category>,string>>('/categories', {
-            params: {
-                limit: 1000,
-                offset: 0
-            }
-        })
-
-        categories = res.data.result.data
-
-    } catch {
-        error = 'Ocurrió un error inesperado al intentar recuperar las categorias'
-    }
-
+    let categories : Category[] = await categoryRepository.getAll()
+    let error = categories.length === 0 ? 'No se han podido cargar las categorias' : undefined
     return (
         <>
             <FullError error={error}>

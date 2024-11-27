@@ -1,30 +1,28 @@
 'use server'
 
-import {Book} from "@/features/books/definitions/Book";
-import {baseAxiosClient} from "@/features/auth/axios/axiosClient";
-import BaseResponse from "@/core/definitinos/BaseResponse";
-import PaginationResult from "@/core/definitinos/PaginationResult";
-import SearcherBooks from "@/features/searcher/components/SearcherBooks";
+import SearcherBooksLateralMenu from "@/features/searcher/components/SearcherBooksLateralMenu";
+import {Suspense} from "react";
+import BasicLoader from "@/core/components/loaders/BasicLoader";
+import SearcherBooksServer from "@/features/searcher/components/SearcherBooks.server";
 
 export default async function Search({searchParams}: { searchParams: { q: string } }) {
 
-    let result : PaginationResult<Book> | undefined = undefined
-
-    try {
-        const respose = await baseAxiosClient.get<BaseResponse<PaginationResult<Book>, string>>("/books", {
-            params: {
-                search: searchParams.q
-            }
-        })
-        result = respose.data.result
-    } catch (ex) {
-        console.error(ex)
-        return <SearcherBooks/>
-    }
-
-    return (
-        <>
-           <SearcherBooks initialFetch={result}/>
-        </>
-    )
+   return (
+       <>
+           <Suspense fallback={
+               <div className={'w-full h-32 flex items-center justify-center'}>
+                   <BasicLoader loading={true}/>
+               </div>
+           }>
+               <div className={'grid grid-cols-12 max-w-7xl place-self-center p-6 gap-2 w-full'}>
+                   <div className={'sm:col-span-3'}>
+                       <SearcherBooksLateralMenu/>
+                   </div>
+                   <div className={'col-span-12 sm:col-span-9'}>
+                      <SearcherBooksServer searchParams={searchParams}/>
+                   </div>
+               </div>
+           </Suspense>
+       </>
+   )
 }

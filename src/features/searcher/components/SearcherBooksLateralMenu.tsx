@@ -1,0 +1,69 @@
+'use client'
+
+import {categoryRepository} from "@/features/categories/lib/repository/CategoryRepository";
+import FullError from "@/core/components/errors/FullError";
+import Link from "next/link";
+import {useEffect, useMemo, useState} from "react";
+import Category from "@/features/books/definitions/Category";
+import BasicLoader from "@/core/components/loaders/BasicLoader";
+
+export default function SearcherBooksLateralMenu() {
+
+    const [categories, setCategories] = useState<Category[]>([])
+    const [loading, setLoading] = useState(false)
+    const [error, setError] = useState<string | undefined>(undefined)
+
+    useEffect(() => {
+        setLoading(true)
+        categoryRepository.getAll()
+            .then((categories) => {
+                if (categories.length === 0)
+                    setError('No se han podido cargar las categorias')
+
+                setCategories(categories)
+            })
+            .finally(() => setLoading(false))
+    }, []);
+
+    return (
+        <>
+            <aside className={'bg-background shadow-lg rounded-xl truncate px-3 py-2 hidden sm:block'}>
+                <header>
+                    <h3 className={'font-bold text-xl'}>
+                        Categorias
+                    </h3>
+                </header>
+                <BasicLoader loading={loading} color={'--primary'}>
+                    <FullError error={error}>
+                        <ul>
+                            {
+                                categories.map((category) => (
+                                    <CategorieItem category={category} key={category.id}/>
+                                ))
+                            }
+                        </ul>
+                    </FullError>
+                </BasicLoader>
+            </aside>
+        </>
+    );
+}
+
+function CategorieItem({category}: { category: Category }) {
+
+    const url = useMemo(() => {
+        const currentUrl = new URL(window.location.href);
+        currentUrl.searchParams.set('category', category.description);
+        return currentUrl.toString();
+    }, [category])
+
+    return (
+        <>
+            <li>
+                <Link href={url} className={'px-2 py-1 transition-colors ease-in hover:bg-primary hover:text-background cursor-pointer flex'}>
+                    {category.description}
+                </Link>
+            </li>
+        </>
+    )
+}
