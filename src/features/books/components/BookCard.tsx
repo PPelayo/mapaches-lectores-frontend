@@ -2,8 +2,11 @@
 
 import {Book} from "@/features/books/definitions/Book";
 import CoverBook from "@/features/books/components/CoverBook";
-import {Rating} from "@mui/material";
 import { useMemo } from "react";
+import dynamic from 'next/dynamic';
+
+const Rating = dynamic(() => import('@mui/material/Rating'), { ssr: false });
+
 
 interface  Props {
     book : Book,
@@ -13,7 +16,7 @@ interface  Props {
 export default function BookCard ({ book, onClick } : Props) {
 
     const authorsNameToDisplay =  useMemo(() => {
-        return book.authors.map((author, index) => 
+        return book.authors.map((author, index) =>
             `${author.name} ${author.lastName}${index < book.authors.length - 1 ? ', ' : ''} `
         )
     }, [book])

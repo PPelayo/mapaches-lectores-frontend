@@ -52,7 +52,7 @@ export default function SearcherBooks({ initialFetch } : Props){
                         className={'flex-1 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 xl:grid-cols-5 gap-4 p-2 md:p-4 items-center w-full'}>
                         {
                             books.map((book) => (
-                                <Link href={`books/${book.itemUuid}`}>
+                                <Link href={`/books/${book.itemUuid}`}>
                                     <BookCard book={book} key={book.itemUuid}/>
                                 </Link>
                             ))

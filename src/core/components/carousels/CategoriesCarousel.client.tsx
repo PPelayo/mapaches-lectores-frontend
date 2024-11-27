@@ -75,11 +75,3 @@ function CategoryCard({ category }: { category: Category }) {
         </>
     )
 }
-
-function CategoryCardSkeleton() {
-    return (
-        <>
-
-        </>
-    )
-}
