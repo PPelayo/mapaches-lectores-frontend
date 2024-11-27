@@ -9,6 +9,8 @@ import { Book } from "@/features/books/definitions/Book";
 import BookCard from "@/features/books/components/BookCard";
 import 'swiper/css';
 import Link from "next/link";
+import CarouselLeftButton from "@/core/components/buttons/CarouselLeftButton";
+import CarouselRightButton from "@/core/components/buttons/CarouselRightButton";
 
 
 interface Props {
@@ -28,7 +30,7 @@ export default function MorePopularBooksCarousel({ books }: Props) {
 
     return (
         <>
-            <div className={`w-full relative max-h-2xl ${!swiperInstance && 'invisible'}`}>
+            <div className={`w-full relative max-h-2xl ${!swiperInstance ? 'invisible' : ''}`}>
                 <Swiper
                     onSwiper={(swiper) => (setSwiperInstance(swiper))}
                     slidesPerView={5}
@@ -57,36 +59,8 @@ export default function MorePopularBooksCarousel({ books }: Props) {
                         ))
                     }
                 </Swiper>
-
-                {/* Botones personalizados */}
-                <Button
-                    onClick={handlePrev}
-                    sx={{
-                        position: "absolute",
-                        left: 10,
-                        top: "50%",
-                        transform: "translateY(-50%)",
-                        zIndex: 10,
-                        backgroundColor: "rgba(0, 0, 0, 0.5)",
-                        color: "white",
-                    }}
-                >
-                    {"<"}
-                </Button>
-                <Button
-                    onClick={handleNext}
-                    sx={{
-                        position: "absolute",
-                        right: 10,
-                        top: "50%",
-                        transform: "translateY(-50%)",
-                        zIndex: 10,
-                        backgroundColor: "rgba(0, 0, 0, 0.5)",
-                        color: "white",
-                    }}
-                >
-                    {">"}
-                </Button>
+                <CarouselLeftButton onClick={handlePrev} />
+                <CarouselRightButton onClick={handleNext} />
             </div>
         </>
     )

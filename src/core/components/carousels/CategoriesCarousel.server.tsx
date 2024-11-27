@@ -4,6 +4,7 @@ import CategoriesCarouselClient from "./CategoriesCarousel.client"
 import { baseAxiosClient } from "@/features/auth/axios/axiosClient"
 import PaginationResult from "@/core/definitinos/PaginationResult"
 import BaseResponse from "@/core/definitinos/BaseResponse"
+import MorePopularBooksCarousel from "@/features/books/components/MorePopularBooksCarousel";
 
 export default async function CategoriesCarouselServer(){
 
@@ -27,7 +28,10 @@ export default async function CategoriesCarouselServer(){
     return (
         <>
             <FullError error={error}>
-                <CategoriesCarouselClient categories={categories}/>
+                <section className="flex flex-col gap-1 py-2 px-4 my-2">
+                    <h2 className="text-2xl font-bold">Categorias</h2>
+                    <CategoriesCarouselClient categories={categories} />
+                </section>
             </FullError>
         </>
     )

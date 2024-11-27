@@ -6,6 +6,10 @@ import { useState } from "react";
 import Category from "@/features/books/definitions/Category";
 import Link from "next/link";
 import { Button } from "@mui/material";
+import ArrowLeftIcon from "@/core/components/icons/ArrowLeftIcon";
+import ArrowRightIcon from "@/core/components/icons/ArrowRightIcon";
+import CarouselLeftButton from "@/core/components/buttons/CarouselLeftButton";
+import CarouselRightButton from "@/core/components/buttons/CarouselRightButton";
 
 interface Props {
     categories: Category[]
@@ -25,14 +29,15 @@ export default function CategoriesCarouselClient({ categories }: Props) {
 
     return (
         <>
-            <div className="w-full px-2 relative">
+            <div className={`w-full relative max-h-2xl ${!swipper && 'invisible'}`}>
                 <Swiper
                     onSwiper={(swp) => setSwipper(swp)}
                     slidesPerView={6}
                     spaceBetween={10}
                     breakpoints={{
-                        200: { slidesPerView: 2 },
-                        320: { slidesPerView: 2 },
+                        200: { slidesPerView: 1 },
+                        320: { slidesPerView: 1 },
+                        500: { slidesPerView: 2 },
                         640: { slidesPerView: 3 },
                         768: { slidesPerView: 3 },
                         1024: { slidesPerView: 4 },
@@ -50,36 +55,8 @@ export default function CategoriesCarouselClient({ categories }: Props) {
                     }
 
                 </Swiper>
-                <Button
-                    onClick={handlePrev}
-                    sx={{
-                        position: "absolute",
-                        top: "50%",
-                        transform: "translateY(-50%)",
-                        zIndex: 10,
-                        backgroundColor: "rgba(0, 0, 0, 0.5)",
-                        color: "white",
-                        height: "65%"
-                    }}
-                >
-                    {"<"}
-                </Button>
-            
-                <Button
-                    onClick={handleNext}
-                    sx={{
-                        position: "absolute",
-                        right: 10,
-                        top: "50%",
-                        transform: "translateY(-50%)",
-                        zIndex: 10,
-                        backgroundColor: "rgba(0, 0, 0, 0.5)",
-                        color: "white",
-                        height: "65%"
-                    }}
-                >
-                    {">"}
-                </Button>
+                <CarouselLeftButton onClick={handlePrev} />
+                <CarouselRightButton onClick={handleNext}/>
             </div>
         </>
     )
@@ -88,8 +65,8 @@ export default function CategoriesCarouselClient({ categories }: Props) {
 function CategoryCard({ category }: { category: Category }) {
     return (
         <>
-            <Link href={`/search?category=${category.description}&category=terror`} className="w-auto shadow-xl rounded-2xl bg-background flex items-center justify-center px-8 py-4 my-4">
-                <button className="">
+            <Link href={`/search?category=${category.description}&category=terror`} className="w-auto rounded-2xl bg-background flex items-center justify-center px-8 py-4">
+                <button className="truncate">
                     <h2 className="text-2xl font-bold">
                         {category.description}
                     </h2>

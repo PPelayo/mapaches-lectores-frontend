@@ -8,7 +8,7 @@ export default function Home() {
         <>
             <Suspense fallback={
                 <div className="w-full h-24 flex items-center justify-center">
-                    <BasicLoader loading />
+                    <BasicLoader loading={true} />
                 </div>
             }>
                 <MorePopularBooks />
@@ -16,7 +16,7 @@ export default function Home() {
 
             <Suspense fallback={
                 <div className="w-full h-24 flex items-center justify-center">
-                    <BasicLoader loading />
+                    <BasicLoader loading={true} />
                 </div>
             }>
                 <CategoriesCarouselServer />
