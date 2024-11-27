@@ -14,7 +14,6 @@ import toast, {Toaster} from 'react-hot-toast'
 import {authAxiosClient} from '@/features/auth/axios/axiosClient'
 import {AxiosError} from 'axios'
 import ImageUploadButton from '../components/ImageUploadButton'
-import ImageIcon from "@/core/components/icons/ImageIcon";
 import BaseResponse from "@/core/definitinos/BaseResponse";
 import {useRouter} from "next/navigation";
 import CoverBook from '../components/CoverBook'

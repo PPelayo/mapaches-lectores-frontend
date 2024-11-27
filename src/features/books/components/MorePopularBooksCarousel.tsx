@@ -28,7 +28,7 @@ export default function MorePopularBooksCarousel({ books }: Props) {
 
     return (
         <>
-            <div className={'w-full relative max-h-2xl'}>
+            <div className={`w-full relative max-h-2xl ${!swiperInstance && 'invisible'}`}>
                 <Swiper
                     onSwiper={(swiper) => (setSwiperInstance(swiper))}
                     slidesPerView={5}
