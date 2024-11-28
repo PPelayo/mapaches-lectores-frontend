@@ -53,7 +53,7 @@ export default function SearcherBooksClient({ initialFetch } : Props){
                         {books.length === 0 && !loading && 'No hay datos que mostrar para esta búsqueda'}
                     </h2>
                     <section
-                        className={'flex-1 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 xl:grid-cols-5 gap-4 px-2 items-center w-full'}>
+                        className={'flex-1 grid grid-cols-2 items-start sm:grid-cols-3 md:grid-cols-4 xl:grid-cols-5 gap-4 px-2 w-full'}>
                         {
                             books.map((book) => (
                                 <Link href={`/books/${book.itemUuid} `} key={book.itemUuid}>
