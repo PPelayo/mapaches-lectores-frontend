@@ -5,10 +5,11 @@ import {Book} from "@/features/books/definitions/Book";
 import useSearcherBooks from "@/features/searcher/hooks/useSearcherBooks";
 import BasicLoader from "@/core/components/loaders/BasicLoader";
 import PaginationResult from "@/core/definitinos/PaginationResult";
-import {useEffect, useRef} from "react";
+import {useEffect, useRef, useState} from "react";
 import {useSearchParams} from "next/navigation";
 import FullError from "@/core/components/errors/FullError";
 import Link from "next/link";
+import { data } from "motion/react-client";
 
 interface  Props {
     initialFetch? : PaginationResult<Book>
@@ -19,6 +20,7 @@ const BOOKS_PER_FETCH = 10
 export default function SearcherBooksClient({ initialFetch } : Props){
 
     const searchParams = useSearchParams()
+
     const {
         loading,
         error,
@@ -26,7 +28,7 @@ export default function SearcherBooksClient({ initialFetch } : Props){
         hasMore,
         loadMore,
         clear
-    } = useSearcherBooks(BOOKS_PER_FETCH, initialFetch)
+    } = useSearcherBooks(BOOKS_PER_FETCH, initialFetch, searchParams)
 
     const hasUsedInitialFetch = useRef(false);
 
@@ -35,19 +37,21 @@ export default function SearcherBooksClient({ initialFetch } : Props){
 
         //Si no ha usado el fetch inicial y este existe, no hace nada, de forma que cuando cambio el searchParams la segunda vez si hace un clear y un loadMore
         if (!hasUsedInitialFetch.current && initialFetch) {
-            console.log('evitando hacer el fetch')
             hasUsedInitialFetch.current = true
             return
         }
-        console.log('haciendo el fetch')
         clear()
         loadMore(query, 0)
     }, [searchParams, initialFetch]);
+
 
     return (
         <>
             <FullError error={error}>
                 <div className={'flex flex-col gap-4 items-center'}>
+                    <h2 className="italic text-xl">
+                        {books.length === 0 && !loading && 'No hay datos que mostrar para esta búsqueda'}
+                    </h2>
                     <section
                         className={'flex-1 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 xl:grid-cols-5 gap-4 px-2 items-center w-full'}>
                         {

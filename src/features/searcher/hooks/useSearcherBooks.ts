@@ -1,10 +1,10 @@
 import {useCallback, useEffect, useState} from "react";
 import {Book} from "@/features/books/definitions/Book";
-import {baseAxiosClient} from "@/features/auth/axios/axiosClient";
-import BaseResponse from "@/core/definitinos/BaseResponse";
 import PaginationResult from "@/core/definitinos/PaginationResult";
+import { bookRepository } from "@/features/books/lib/repositories/BookRepository";
+import { ReadonlyURLSearchParams } from "next/navigation";
 
-export default function useSearcherBooks(itemsPerFetch : number, initialFetch : PaginationResult<Book> | undefined) {
+export default function useSearcherBooks(itemsPerFetch : number, initialFetch : PaginationResult<Book> | undefined, searchParams: ReadonlyURLSearchParams) {
 
     const [loading, setLoading] = useState(false)
     const [error, setError] = useState<string | null>(null)
@@ -19,16 +19,8 @@ export default function useSearcherBooks(itemsPerFetch : number, initialFetch : 
         }
     }, [initialFetch])
 
-    const getResults = async (offset : number, search : string) => {
-        console.log('offset', offset)
-        const response = await baseAxiosClient.get<BaseResponse<PaginationResult<Book>, string>>('/books', {
-            params: {
-                offset: offset,
-                limit: itemsPerFetch,
-                search
-            }
-        })
-        return response.data.result
+    const getResults = async (offset : number, search : string, category? : string) => {
+        return bookRepository.getBooks({ limit: itemsPerFetch, offset, search, category })
     }
 
     const loadMore = useCallback((search : string, customOffset : number | undefined = undefined) => {
@@ -36,19 +28,18 @@ export default function useSearcherBooks(itemsPerFetch : number, initialFetch : 
         setLoading(true)
         setError(null)
         const currentOffset = customOffset ?? offset
-        console.log('offset 2', offset)
-        getResults(currentOffset, search)
+        getResults(currentOffset, search, searchParams.get('category') ?? undefined)
             .then((result) => {
-                setOffset(prev => prev + result.data.length)
-                setHasMore(result.hasNext)
+                setOffset(prev => prev + (result?.data?.length ?? 0))
+                setHasMore(result?.hasNext ?? false)
                 console.log('result', result)
-                setBooks(prev => [...prev, ...result.data])
+                setBooks(prev => [...prev, ...result?.data ?? []])
             })
             .catch(() => {
                 setError('Ocurrió un error al cargar los libros')
             })
             .finally(() => setLoading(false))
-    }, [loading, offset, itemsPerFetch, hasMore])
+    }, [loading, offset, itemsPerFetch, hasMore, searchParams])
 
     const clear = () => {
         setBooks([])

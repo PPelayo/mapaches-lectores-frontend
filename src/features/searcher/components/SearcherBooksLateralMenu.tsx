@@ -37,7 +37,7 @@ export default function SearcherBooksLateralMenu() {
                 </header>
                 <BasicLoader loading={loading} color={'--primary'}>
                     <FullError error={error}>
-                        <ul>
+                        <ul className="flex flex-col gap-1">
                             {
                                 categories.map((category) => (
                                     <CategorieItem
@@ -57,10 +57,16 @@ export default function SearcherBooksLateralMenu() {
 
 function CategorieItem({ category, isSelected }: { category: Category, isSelected: boolean }) {
     const url = useMemo(() => {
-        const currentUrl = new URL(window.location.href);
-        currentUrl.searchParams.set('category', category.description);
-        return currentUrl.toString();
-    }, [category]);
+        if (isSelected) {
+            const currentUrl = new URL(window.location.href);
+            currentUrl.searchParams.delete('category');
+            return currentUrl.toString();
+          } else {
+            const currentUrl = new URL(window.location.href);
+            currentUrl.searchParams.set('category', category.description);
+            return currentUrl.toString();
+          }
+    }, [category, isSelected]);
 
     return (
         <>

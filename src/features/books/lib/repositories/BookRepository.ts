@@ -20,7 +20,7 @@ class BookRepository{
                 params: {
                     limit: limit,
                     offset: offset,
-                    category: category,
+                    categories: category,
                     order: order,
                     search: search
                 }
