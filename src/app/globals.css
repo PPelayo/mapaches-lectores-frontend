@@ -23,34 +23,3 @@ html {
     background-color: var(--surface);
 }
 
-/* tailwind.css */
-@layer utilities {
-    .custom-scrollbar {
-        scrollbar-width: thin; /* Firefox */
-        scrollbar-color: var(--primary) var(--background); /* Colores: thumb y track */
-    }
-
-    .custom-scrollbar::-webkit-scrollbar {
-        width: 8px; /* Ancho de la barra de scroll */
-        height: 8px; /* Altura de la barra de scroll */
-    }
-
-    .custom-scrollbar::-webkit-scrollbar-track {
-        background: var(--background); /* Color del fondo de la pista */
-        border-radius: 10px; /* Bordes redondeados */
-    }
-
-    .custom-scrollbar::-webkit-scrollbar-thumb {
-        background: var(--primary); /* Color del "thumb" */
-        border-radius: 10px; /* Bordes redondeados */
-        border: 2px solid var(--background); /* Espaciado interno */
-    }
-
-    .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-        background: var(--secondary); /* Color al pasar el ratón */
-    }
-
-    .custom-scrollbar::-webkit-scrollbar-thumb:active {
-        background: var(--primary);
-    }
-}
