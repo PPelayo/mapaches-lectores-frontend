@@ -12,8 +12,8 @@ export default async function Search({ searchParams }: { searchParams: { q: stri
     return (
         <>
             <div className="flex flex-col w-full h-full flex-1 relative">
-                <div className={'grid grid-cols-12 max-w-7xl place-self-center p-6 gap-2 w-full'}>
-                    <div className={'sm:col-span-3'}>
+                <div className={'grid grid-cols-12 max-w-7xl place-self-center py-4 px-2 gap-2 w-full'}>
+                    <div className={'sm:col-span-3 hidden sm:block'}>
                         <SearcherBooksLateralMenu />
                     </div>
                     <Suspense fallback={

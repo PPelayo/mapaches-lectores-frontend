@@ -48,7 +48,7 @@ export default function SearcherBooksClient({ initialFetch } : Props){
     return (
         <>
             <FullError error={error}>
-                <div className={'flex flex-col gap-4 items-center'}>
+                <div className={'flex flex-col h-full items-center'}>
                     <h2 className="italic text-xl">
                         {books.length === 0 && !loading && 'No hay datos que mostrar para esta búsqueda'}
                     </h2>
