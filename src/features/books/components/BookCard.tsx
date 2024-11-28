@@ -38,11 +38,20 @@ export default function BookCard ({ book, onClick } : Props) {
                         ))
                     }
                 </h6>
-                <section className="w-full text-right flex flex-row gap-2 justify-end">
+                <section className="w-full text-right flex flex-row gap-2 justify-end items-center">
                     <Rating
                         value={book.reviewsAvarage}
                         readOnly
                         suppressHydrationWarning={true}
+                        size="medium"
+                        className="hidden sm:flex"
+                    />
+                    <Rating
+                        value={book.reviewsAvarage}
+                        readOnly
+                        suppressHydrationWarning={true}
+                        size="small"
+                        className="sm:hidden"
                     />
                     <span>({book.reviewsCount})</span>
                 </section>
