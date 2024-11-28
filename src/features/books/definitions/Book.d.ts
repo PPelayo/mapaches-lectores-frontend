@@ -1,5 +1,6 @@
 import Category from "./Category"
 import Author from "./Author"
+import {Publisher} from "@/features/books/definitions/Publisher";
 
 export interface Book {
     id: number
@@ -15,7 +16,8 @@ export interface Book {
     updatedAt: string
     itemUuid: string,
     reviewsAvarage : number,
-    reviewsCount : number
+    reviewsCount : number,
+    publisher : Publisher
   }
   export interface CreateBookRequest {
     name: string

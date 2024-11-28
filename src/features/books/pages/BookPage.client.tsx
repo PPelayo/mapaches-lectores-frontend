@@ -20,20 +20,21 @@ interface Props {
     initialsReviews?: PaginationResult<Review>
 }
 
-export default function BookPageClient({ initialBook, initialsReviews } : Props){
+export default function BookPageClient({initialBook, initialsReviews}: Props) {
 
-    const { bookId } = useParams<{bookId : string}>()
+    const {bookId} = useParams<{ bookId: string }>()
     const [book, setBook] = useState<Book>(initialBook)
     const [userReview, setUserReview] = useState<Review | undefined>()
 
     const [loadingUserReview, setLoadingUserReview] = useState(false)
 
-    const handleUplaodReviews = (review : Review) => {
+    const handleUplaodReviews = (review: Review) => {
         baseAxiosClient.get<BaseResponse<Book, string>>(`/books/${bookId}`)
             .then((res) => {
                 setBook(res.data.result)
             })
-            .catch(() => {})
+            .catch(() => {
+            })
         setUserReview(review)
     }
 
@@ -43,29 +44,58 @@ export default function BookPageClient({ initialBook, initialsReviews } : Props)
             .then((res) => {
                 setUserReview(res.data.result)
             })
-            .catch(() => {})
+            .catch(() => {
+            })
             .finally(() => setLoadingUserReview(false))
     }, [])
 
     return (
-        <div className="flex  flex-col gap-8 p-4 h-max max-w-7xl place-self-center w-full">
+        <div className="flex flex-col gap-8 p-2 sm:p-4 h-max max-w-6xl place-self-center w-full">
             <section className="flex flex-col sm:flex-row gap-4 sm:gap-12">
-                <CoverBook cover={book.coverUrl} className={'w-full sm:w-64 rounded-lg truncate shadow-lg'}/>
-                <article className="flex flex-col gap-4">
-                    <header>
-                        <h1 className="text-3xl font-bold uppercase">
+                <CoverBook cover={book.coverUrl} className={'w-full sm:w-64 md:w-80 rounded-lg truncate shadow-lg'}/>
+                <article className="flex flex-col gap-4 flex-1">
+                    <header className={'flex flex-col gap-4'}>
+                        <h1 className="text-3xl font-bold uppercase flex flex-col sm:flex-row sm:gap-2">
                             {book.name}
                         </h1>
-                        <section className="text-lg italic flex flex-row gap-2 flex-wrap">
-                            {
-                                book.authors.map((author) => (
-                                    <BasicChip
-                                        key={author.itemUuid}
-                                        label={`${author.name} ${author.lastName}`}
-                                    />
-                                ))
-                            }
-                        </section>
+                        <div className={'w-full flex flex-col gap-2 sm:gap-0 sm:flex-row sm:justify-between'}>
+                            <section>
+                                <h3 className={'text-xl italic font-bold'}>Editorial</h3>
+                                <span className={'text-lg'}>{book.publisher.name}</span>
+                            </section>
+                            <section>
+                                <h3 className={'text-xl italic font-bold'}>Nº Páginas</h3>
+                                <span className={'text-lg'}>{book.numberOfPages}</span>
+                            </section>
+                        </div>
+                        <div className={'w-full flex flex-col gap-2 sm:gap-0 sm:flex-row sm:justify-between'}>
+                            <section>
+                                <h3 className={'text-xl italic font-bold'}>Autores</h3>
+                                <div className="text-lg italic flex flex-row gap-2 flex-wrap">
+                                {
+                                        book.authors.map((author) => (
+                                            <BasicChip
+                                                key={author.itemUuid}
+                                                label={`${author.name} ${author.lastName}`}
+                                            />
+                                        ))
+                                    }
+                                </div>
+                            </section>
+                            <section>
+                                <h3 className={'text-xl italic font-bold'}>Categorias</h3>
+                                <div className="text-lg italic flex flex-row gap-2 flex-wrap">
+                                    {
+                                        book.categories.map((category) => (
+                                            <BasicChip
+                                                key={category.itemUuid}
+                                                label={category.description}
+                                            />
+                                        ))
+                                    }
+                                </div>
+                            </section>
+                        </div>
                     </header>
                     <main>
                         <h3 className="text-xl font-bold">Sinposis</h3>
@@ -86,12 +116,13 @@ export default function BookPageClient({ initialBook, initialsReviews } : Props)
                 <BasicLoader loading={loadingUserReview}>
                     {
                         userReview
-                            ? <ReviewComponent review={userReview} />
+                            ? <ReviewComponent review={userReview}/>
                             : <UploadReviewForm bookId={bookId} onReviewCreated={handleUplaodReviews}/>
                     }
                 </BasicLoader>
 
-                <ShowReviews bookId={bookId} iniitalReviews={initialsReviews} reviewsToHidden={userReview && [userReview]}/>
+                <ShowReviews bookId={bookId} iniitalReviews={initialsReviews}
+                             reviewsToHidden={userReview && [userReview]}/>
             </section>
         </div>
     )

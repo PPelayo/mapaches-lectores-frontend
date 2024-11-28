@@ -9,6 +9,9 @@ export default {
   ],
   theme: {
     extend: {
+      screens: {
+        "xs" : '420px'
+      },
       aspectRatio: {
         'portada' : '1/1.6'
       },
