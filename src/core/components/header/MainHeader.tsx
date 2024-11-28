@@ -3,13 +3,17 @@ import ButtonCuenta from './ButtonCuenta'
 import SubHeader from './SubHeader'
 import Link from "next/link";
 import SearcherHeader from "@/core/components/header/SearcherHeader";
+import NavigationButton from "@/core/components/buttons/NavigationButton";
 
 export default function MainHeader() {
     return (
         <div className="flex flex-col sticky top-0 left-0 right-0 z-10">
             <header
                 className="w-full text-md sm:text-lg bg-primaryContainer min-h-12 flex flex-row items-center justify-between px-4 py-2">
-                <Link href={'/'} className="border rounded-lg cursor-pointer">ZONA DEL LOGO</Link>
+                <div className={'flex flex-row gap-2 items-center'}>
+                    <NavigationButton/>
+                    <Link href={'/'} className="h-full border rounded-lg cursor-pointer">ZONA DEL LOGO</Link>
+                </div>
                 <div className='hidden sm:block h-full'>
                     <SearcherHeader/>
                 </div>

@@ -1,5 +1,7 @@
 import MainHeader from '@/core/components/header/MainHeader'
 import React from 'react'
+import {MobileNavigations} from "@/core/components/navigation/Navigation";
+import {navGraphConfig} from "@/NavGraphConfig";
 
 export default function BaseLayout({
     children,
@@ -9,8 +11,8 @@ export default function BaseLayout({
     return (
         <div className="min-h-dvh w-full grid grid-rows-[auto_1fr_auto]">
             <MainHeader />
-
-            <main className="w-full overflow-hidden">
+            <main className="w-full overflow-auto">
+                <MobileNavigations navGraph={navGraphConfig} />
                 {children}
             </main>
 

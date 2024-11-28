@@ -51,7 +51,7 @@ export default function BookPageClient({initialBook, initialsReviews}: Props) {
 
     return (
         <div className="flex flex-col gap-8 p-2 sm:p-4 h-max max-w-6xl place-self-center w-full">
-            <section className="flex flex-col sm:flex-row gap-4 sm:gap-12">
+            <section className="flex flex-col sm:flex-row gap-4 sm:gap-6">
                 <CoverBook cover={book.coverUrl} className={'w-full sm:w-64 md:w-80 rounded-lg truncate shadow-lg'}/>
                 <article className="flex flex-col gap-4 flex-1">
                     <header className={'flex flex-col gap-4'}>
