@@ -17,23 +17,22 @@ import ImageUploadButton from '../components/ImageUploadButton'
 import BaseResponse from "@/core/definitinos/BaseResponse";
 import {useRouter} from "next/navigation";
 import CoverBook from '../components/CoverBook'
+import {bookRepository} from "@/features/books/lib/repositories/BookRepository";
 
 interface Props {
     book? : Book
 }
 
-export default function CreateBookPage({ book : optionalBook } : Props) {
+export default function EditBookPageClient({ book : defaultBook } : Props) {
 
-    const [book, _] = useState<Book | undefined>(optionalBook)
-
-    const [title, setTitle] = useState(optionalBook?.name ?? '')
-    const [synopsis, setSynopsis] = useState(optionalBook?.synopsis ?? '')
-    const [numberOfPages, setNumberOfPages] = useState(optionalBook?.numberOfPages ?? 0)
-    const [authors, setAuthros] = useState<Author[]>(optionalBook?.authors ?? [])
-    const [categories, setCategories] = useState<Category[]>(optionalBook?.categories ?? [])
-    const [publisher, setPublisher] = useState<Publisher | undefined>(optionalBook?.publisher)
+    const [title, setTitle] = useState(defaultBook?.name ?? '')
+    const [synopsis, setSynopsis] = useState(defaultBook?.synopsis ?? '')
+    const [numberOfPages, setNumberOfPages] = useState(defaultBook?.numberOfPages ?? 0)
+    const [authors, setAuthros] = useState<Author[]>(defaultBook?.authors ?? [])
+    const [categories, setCategories] = useState<Category[]>(defaultBook?.categories ?? [])
+    const [publisher, setPublisher] = useState<Publisher | undefined>(defaultBook?.publisher)
     const [image, setImage] = useState<File | null>(null)
-    const [imagePreview, setImagePreview] = useState<string | null>(optionalBook?.coverUrl ?? null)
+    const [imagePreview, setImagePreview] = useState<string | null>(defaultBook?.coverUrl ?? null)
 
     const [loading, setLoading] = useState(false)
     const router = useRouter()
@@ -70,12 +69,11 @@ export default function CreateBookPage({ book : optionalBook } : Props) {
         return true
     }
 
-    const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+    const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault()
 
         if(!validateForms())
             return
-
         const request: CreateBookRequest = {
             name: title,
             synopsis,
@@ -86,38 +84,21 @@ export default function CreateBookPage({ book : optionalBook } : Props) {
             categories: categories.map(category => category.itemUuid)
         }
         setLoading(true)
-        authAxiosClient.post<BaseResponse<Book, string>>('/books', request)
-            .then((response) => {
-                const book = response.data.result
-                authAxiosClient.patchForm(`/books/${book.itemUuid}/cover`, {file : image})
-                    .then(() => {
-                        toast.success('Libro creado')
-                        router.push(`/books/${book.itemUuid}`)
-                    }).catch(() => toast.error('Error al subir la imagen')
-                ).finally(() => setLoading(false))
-            })
-            .catch((ex) => {
-                if(ex instanceof AxiosError){
-                    if(ex.status === 400){
-                        toast.error('Error. Datos inválidos')
-                        setLoading(false)
-                        return
-                    }
-                    if(ex.status === 401){
-                        toast.error('Error. Debes estar logueado')
-                        setLoading(false)
-                        return
-                    }
-                    if(ex.status === 409){
-                        toast.error('Error. El libro ya existe')
-                        setLoading(false)
-                        return
-                    }
-                }
+        if(defaultBook){
 
-                toast.error('Error al crear el libro')
-                setLoading(false)
+        } else {
+            const result = await bookRepository.createBook(request, image ?? undefined)
+            result.handle({
+                onSuccess: (book) => {
+                    toast.success('Libro creado')
+                    router.push(`/books/${book.itemUuid}`)
+                },
+                onFailure: (error) => {
+                    toast.error(error.toString())
+                },
+                onFinally: () => setLoading(false)
             })
+        }
     }
 
     const handleNumberChange = (e: ChangeEvent<HTMLInputElement>) => {
