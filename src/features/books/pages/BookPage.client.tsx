@@ -6,7 +6,7 @@ import BasicChip from "@/core/components/chips/BasicChip";
 import {Rating} from "@mui/material";
 import UploadReviewForm from "@/features/reviews/components/UploadReviewForm";
 import ShowReviews from "@/features/reviews/components/ShowReviews";
-import {useParams} from "next/navigation";
+import {useParams, useRouter} from "next/navigation";
 import {Review} from "@/features/reviews/definitions/review";
 import PaginationResult from "@/core/definitinos/PaginationResult";
 import {useEffect, useState} from "react";
@@ -14,6 +14,7 @@ import {authAxiosClient, baseAxiosClient} from "@/features/auth/axios/axiosClien
 import BaseResponse from "@/core/definitinos/BaseResponse";
 import ReviewComponent from "@/features/reviews/components/ReviewComponent";
 import BasicLoader from "@/core/components/loaders/BasicLoader";
+import DeleteBookButton from "@/features/books/components/DeleteBookButton";
 
 interface Props {
     initialBook: Book,
@@ -21,6 +22,7 @@ interface Props {
 }
 
 export default function BookPageClient({initialBook, initialsReviews}: Props) {
+    const router = useRouter()
 
     const {bookId} = useParams<{ bookId: string }>()
     const [book, setBook] = useState<Book>(initialBook)
@@ -54,10 +56,13 @@ export default function BookPageClient({initialBook, initialsReviews}: Props) {
             <section className="flex flex-col sm:flex-row gap-4 sm:gap-6">
                 <CoverBook cover={book.coverUrl} className={'w-full sm:w-64 md:w-80 rounded-lg truncate shadow-lg'}/>
                 <article className="flex flex-col gap-4 flex-1">
-                    <header className={'flex flex-col gap-4'}>
+                    <header className={'flex flex-row justify-between items-center'}>
                         <h1 className="text-3xl font-bold uppercase flex flex-col sm:flex-row sm:gap-2">
                             {book.name}
                         </h1>
+                        <DeleteBookButton bookId={bookId} onDeleted={() => router.push('/')}/>
+                    </header>
+                    <main className={'flex flex-col gap-4'}>
                         <div className={'w-full flex flex-col gap-2 sm:gap-0 sm:flex-row sm:justify-between'}>
                             <section>
                                 <h3 className={'text-xl italic font-bold'}>Editorial</h3>
@@ -72,7 +77,7 @@ export default function BookPageClient({initialBook, initialsReviews}: Props) {
                             <section>
                                 <h3 className={'text-xl italic font-bold'}>Autores</h3>
                                 <div className="text-lg italic flex flex-row gap-2 flex-wrap">
-                                {
+                                    {
                                         book.authors.map((author) => (
                                             <BasicChip
                                                 key={author.itemUuid}
@@ -96,8 +101,6 @@ export default function BookPageClient({initialBook, initialsReviews}: Props) {
                                 </div>
                             </section>
                         </div>
-                    </header>
-                    <main>
                         <h3 className="text-xl font-bold">Sinposis</h3>
                         <p className="text-pretty text-xl">
                             {book.synopsis}

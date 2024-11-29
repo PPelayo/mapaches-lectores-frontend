@@ -12,8 +12,6 @@ interface  Params  {
 
 class BookRepository{
 
-
-
     async getBooks({limit = 15, offset = 0,search , category, order} : Params ) : Promise<PaginationResult<Book> | undefined> {
         try{
             const res = await baseAxiosClient.get<BaseResponse<PaginationResult<Book>,string>>('/books', {
@@ -29,6 +27,16 @@ class BookRepository{
 
         } catch (ex){
             return
+        }
+    }
+
+    async deleteBook(bookId : string) : Promise<Error | undefined> {
+        try{
+            await baseAxiosClient.delete<BaseResponse<string, string>>(`/books/${bookId}`)
+            return undefined
+        } catch(ex){
+            console.error(ex)
+            return ex as Error
         }
     }
 
