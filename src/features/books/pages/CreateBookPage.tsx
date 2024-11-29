@@ -29,6 +29,7 @@ export default function CreateBookPage() {
     const [categories, setCategories] = useState<Category[]>([])
     const [publisher, setPublisher] = useState<Publisher | undefined>(undefined)
     const [image, setImage] = useState<File | null>(null)
+    const [imagePreview, setImagePreview] = useState<string | null>(null)
 
     const [loading, setLoading] = useState(false)
     const router = useRouter()
@@ -89,7 +90,7 @@ export default function CreateBookPage() {
                         toast.success('Libro creado')
                         router.push(`/books/${book.itemUuid}`)
                     }).catch(() => toast.error('Error al subir la imagen')
-                    ).finally(() => setLoading(false))
+                ).finally(() => setLoading(false))
             })
             .catch((ex) => {
                 if(ex instanceof AxiosError){
@@ -124,11 +125,24 @@ export default function CreateBookPage() {
         setNumberOfPages(Number(value))
     }
 
+    const handleImageChange = (file: File | null) => {
+        setImage(file)
+        if (file) {
+            const reader = new FileReader()
+            reader.onloadend = () => {
+                setImagePreview(reader.result as string)
+            }
+            reader.readAsDataURL(file)
+        } else {
+            setImagePreview(null)
+        }
+    }
+
     return (
         <>
             <Toaster position='bottom-right'/>
             <section className='flex flex-col sm:flex-row gap-4 w-full max-w-5xl place-self-center mt-2 sm:mt-8 p-4'>
-                <CoverBook cover={book?.coverUrl} className='w-full sm:w-72 truncate rounded-xl shadow-lg h-min'/>
+                <CoverBook cover={imagePreview || book?.coverUrl} className='w-full sm:w-72 truncate rounded-xl shadow-lg h-min'/>
                 <form onSubmit={handleSubmit} className='flex flex-col sm:flex-row gap-4 w-full items-center'>
                     <div className='flex flex-col gap-4 flex-1 w-full'>
                         <BasicTextField
@@ -161,12 +175,12 @@ export default function CreateBookPage() {
                             onChangePublisher={setPublisher}
                         />
 
-                        <ImageUploadButton onImageChange={setImage}/>
+                        <ImageUploadButton onImageChange={handleImageChange}/>
                         <div className='flex-1 w-full flex items-end justify-center gap-4'>
                             <PrimaryButton basicAttributes={{
                                 type: 'submit',
                                 disabled: loading,
-                                className: 'w-1/2'
+                                className: 'w-full sm:w-1/2'
                             }}>Guardar</PrimaryButton>
                         </div>
                     </div>
