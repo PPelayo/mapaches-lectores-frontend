@@ -3,13 +3,14 @@ import {useState} from "react";
 import {Publisher} from "../definitions/Publisher";
 
 interface Props {
+    defaultValue? : Publisher
     onChangePublisher : (publisher : Publisher) => void
 }
 
-export default function PublisherSearcher({ onChangePublisher} : Props) {
+export default function PublisherSearcher({defaultValue, onChangePublisher} : Props) {
 
-    const [value, setValue] = useState('')
-    const [selectedPublishers, setSelectedPublishers] = useState<Publisher[]>([])
+    const [value, setValue] = useState(defaultValue ? defaultValue.name : '')
+    const [selectedPublishers, setSelectedPublishers] = useState<Publisher[]>(defaultValue ? [defaultValue] : [])
     const [allPublisher, setAllPublishers] = useState<Publisher[]>([])  
     const [isSearching, setIsSearching] = useState(true)
     const [error, setError] = useState<string | null>('')

@@ -18,18 +18,22 @@ import BaseResponse from "@/core/definitinos/BaseResponse";
 import {useRouter} from "next/navigation";
 import CoverBook from '../components/CoverBook'
 
-export default function CreateBookPage() {
+interface Props {
+    book? : Book
+}
 
-    const [book, _] = useState<Book | null>(null)
+export default function CreateBookPage({ book : optionalBook } : Props) {
 
-    const [title, setTitle] = useState('')
-    const [synopsis, setSynopsis] = useState('')
-    const [numberOfPages, setNumberOfPages] = useState(0)
-    const [authors, setAuthros] = useState<Author[]>([])
-    const [categories, setCategories] = useState<Category[]>([])
-    const [publisher, setPublisher] = useState<Publisher | undefined>(undefined)
+    const [book, _] = useState<Book | undefined>(optionalBook)
+
+    const [title, setTitle] = useState(optionalBook?.name ?? '')
+    const [synopsis, setSynopsis] = useState(optionalBook?.synopsis ?? '')
+    const [numberOfPages, setNumberOfPages] = useState(optionalBook?.numberOfPages ?? 0)
+    const [authors, setAuthros] = useState<Author[]>(optionalBook?.authors ?? [])
+    const [categories, setCategories] = useState<Category[]>(optionalBook?.categories ?? [])
+    const [publisher, setPublisher] = useState<Publisher | undefined>(optionalBook?.publisher)
     const [image, setImage] = useState<File | null>(null)
-    const [imagePreview, setImagePreview] = useState<string | null>(null)
+    const [imagePreview, setImagePreview] = useState<string | null>(optionalBook?.coverUrl ?? null)
 
     const [loading, setLoading] = useState(false)
     const router = useRouter()
@@ -142,7 +146,7 @@ export default function CreateBookPage() {
         <>
             <Toaster position='bottom-right'/>
             <section className='flex flex-col sm:flex-row gap-4 w-full max-w-5xl place-self-center mt-2 sm:mt-8 p-4'>
-                <CoverBook cover={imagePreview || book?.coverUrl} className='w-full sm:w-72 truncate rounded-xl shadow-lg h-min'/>
+                <CoverBook cover={imagePreview} className='w-full sm:w-72 truncate rounded-xl shadow-lg h-min'/>
                 <form onSubmit={handleSubmit} className='flex flex-col sm:flex-row gap-4 w-full items-center'>
                     <div className='flex flex-col gap-4 flex-1 w-full'>
                         <BasicTextField
@@ -172,6 +176,7 @@ export default function CreateBookPage() {
                         />
 
                         <PublisherSearcher
+                            defaultValue={publisher}
                             onChangePublisher={setPublisher}
                         />
 
