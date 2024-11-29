@@ -7,7 +7,7 @@ export default function AuthorsEdit() {
                 <header>
                     <h1 className="text-2xl font-bold">Crear Autor</h1>
                 </header>
-                <main className="w-full h-72">
+                <main className="w-full h-72 p-4">
                     <CreateAuthorForm />
                 </main>
 

@@ -12,7 +12,7 @@ import User from '@/features/auth/definitions/user'
 import {Menu, MenuButton, MenuItem, MenuItems, MenuSeparator, Transition,} from '@headlessui/react'
 
 export default function ButtonCuenta() {
-    const { user, setUser } = useUserStore()
+    const {user, setUser} = useUserStore()
     const [loading, setLoading] = useState(false)
 
     useEffect(() => {
@@ -21,7 +21,7 @@ export default function ButtonCuenta() {
         setLoading(true)
         authAxiosClient
             .get<BaseResponse<User, string>>('/user/me')
-            .then(({ data }) => {
+            .then(({data}) => {
                 setUser(data.result)
             })
             .catch((err) => {
@@ -46,9 +46,9 @@ export default function ButtonCuenta() {
                 loading={loading}
             >
                 {user ? (
-                    <ButtonWithLogin user={user} />
+                    <ButtonWithLogin user={user}/>
                 ) : (
-                    <ButtonWithoutLogin />
+                    <ButtonWithoutLogin/>
                 )}
             </BasicLoader>
         </>
@@ -61,15 +61,15 @@ function ButtonWithoutLogin() {
             href={'/auth/login'}
             className="text-lg rounded-lg px-4 py-2 transition-all duration-200 hover:text-onSecondary hover:bg-secondary flex flex-row items-center gap-2"
         >
-            <UserIcon className="w-7 sm:w-8 h-auto" />
+            <UserIcon className="w-7 sm:w-8 h-auto"/>
             Mi cuenta
         </Link>
     )
 }
 
-function ButtonWithLogin({ user }: { user: User }) {
+function ButtonWithLogin({user}: { user: User }) {
 
-    const { clearUser } = useUserStore()
+    const {clearUser} = useUserStore()
 
     const handleCloseSesion = () => {
         clearUser()
@@ -79,9 +79,12 @@ function ButtonWithLogin({ user }: { user: User }) {
     return (
         <div>
             <Menu>
-                <MenuButton className="text-lg rounded-lg px-4 py-2 transition-all duration-200 hover:text-onSecondary hover:bg-secondary flex flex-row items-center gap-2">
-                    <UserIcon className="w-7 sm:w-8 h-auto" />
-                    {user.name}
+                <MenuButton
+                    className="text-lg rounded-lg px-4 py-2 transition-all duration-200 hover:text-onSecondary hover:bg-secondary flex flex-row items-center gap-2">
+                    <UserIcon className="w-7 sm:w-8 h-auto"/>
+                    <div className={'hidden xs:block'}>
+                        {user.name}
+                    </div>
                 </MenuButton>
                 <Transition
                     as={Fragment}

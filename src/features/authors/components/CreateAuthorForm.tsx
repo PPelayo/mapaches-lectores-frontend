@@ -38,7 +38,7 @@ export default function CreateAuthorForm({ onCreated } : Props){
             <Toaster position="bottom-right"/>
             <form 
                 onSubmit={handleSubmit}
-                className="flex flex-col justify-between h-full w-full p-4"
+                className="flex flex-col justify-between h-full w-full"
             >
                 <div className="flex flex-col gap-4 w-full">
                 <BasicTextField

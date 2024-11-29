@@ -11,7 +11,9 @@ export default function MainHeader() {
             <header
                 className="w-full text-md sm:text-lg bg-primaryContainer min-h-12 flex flex-row items-center justify-between px-4 py-2">
                 <div className={'flex flex-row gap-2 items-center'}>
-                    <NavigationButton/>
+                    <div className={'sm:hidden'}>
+                        <NavigationButton/>
+                    </div>
                     <Link href={'/'} className="h-full border rounded-lg cursor-pointer">ZONA DEL LOGO</Link>
                 </div>
                 <div className='hidden sm:block h-full'>

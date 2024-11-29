@@ -4,13 +4,13 @@ export default function PublishersEdit(){
 
     return (
         <>
-            <section className="self-center place-self-center flex flex-col gap-8 mt-4 items-center w-full max-w-3xl">
+            <section className="place-self-center max-w-3xl w-full flex flex-col items-center mt-4">
                 <header>
-                    <h1 className="text-2xl">
+                    <h1 className="text-2xl font-bold">
                         Crear Editorial
                     </h1>
                 </header>
-                <main className="w-full h-72">
+                <main className="w-full h-72 p-4">
                     <CreatePublisherForm/>
                 </main>
             </section>

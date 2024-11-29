@@ -1,11 +1,14 @@
-import {Button} from "@mui/material";
 import ArrowLeftIcon from "@/core/components/icons/ArrowLeftIcon";
+import dynamic from "next/dynamic";
 
 interface  Props {
     onClick : () => void,
     width? : string,
     height? : string
 }
+
+const Button = dynamic(() => import('@mui/material/Button'), { ssr: false });
+
 
 export default function CarouselLeftButton({onClick, width = "60px", height = "60px"} : Props){
     return (
