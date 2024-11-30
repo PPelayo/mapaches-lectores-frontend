@@ -31,7 +31,7 @@ export default function BookCard ({ book, onClick } : Props) {
             />
             <div className="flex flex-col gap-0 items-center px-2 py-1 truncate">
                 <h2 className="text-lg sm:text-xl font-bold w-full truncate">{book.name}</h2>
-                <h6 className="italic md:text-lg">
+                <h6 className="w-full truncate text-md italic md:text-lg">
                     {
                         authorsNameToDisplay.map((name, index) =>(
                             <span key={index}>{name}</span>
