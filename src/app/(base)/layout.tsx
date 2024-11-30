@@ -2,6 +2,7 @@ import MainHeader from '@/core/components/header/MainHeader'
 import React from 'react'
 import {MobileNavigations} from "@/core/components/navigation/Navigation";
 import {navGraphConfig} from "@/NavGraphConfig";
+import MainFooter from "@/core/components/footer/MainFooter";
 
 export default function BaseLayout({
     children,
@@ -16,7 +17,7 @@ export default function BaseLayout({
                 {children}
             </main>
 
-            <footer className="bg-gray-600">Footer</footer>
+            <MainFooter/>
         </div>
     )
 }
