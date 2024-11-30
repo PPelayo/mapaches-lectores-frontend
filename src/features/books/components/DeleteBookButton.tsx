@@ -68,8 +68,8 @@ export default function DeleteBookButton({ bookId, onDeleted } : Props) {
                         />
                         <button
                             onClick={() => setOpen(true)}
-                            className={'p-4 rounded-full'}>
-                            <DeleteIcon className={'w-8 h-auto text-red-500'}/>
+                            className={'p-2 rounded-full'}>
+                            <DeleteIcon className={'w-9 h-auto text-red-500'}/>
                         </button>
                     </>
                 )

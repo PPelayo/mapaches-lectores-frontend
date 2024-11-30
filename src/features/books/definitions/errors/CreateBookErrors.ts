@@ -1,6 +1,6 @@
 export enum CreateBookErrors {
     DATA_INVALID = 'Datos inválidos',
     UNAUTHORIZED = 'Debes estar logueado',
-    CONFLICT = ' El libro ya existe',
+    CONFLICT = 'Un libro con este nombre ya existe',
     UNEXPECTED = 'Error inesperado'
 }

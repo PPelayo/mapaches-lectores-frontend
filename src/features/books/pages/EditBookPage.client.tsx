@@ -11,13 +11,12 @@ import PublisherSearcher from '../components/PublisherSearcher'
 import {Publisher} from '../definitions/Publisher'
 import {Book, CreateBookRequest} from '../definitions/Book'
 import toast, {Toaster} from 'react-hot-toast'
-import {authAxiosClient} from '@/features/auth/axios/axiosClient'
-import {AxiosError} from 'axios'
 import ImageUploadButton from '../components/ImageUploadButton'
-import BaseResponse from "@/core/definitinos/BaseResponse";
 import {useRouter} from "next/navigation";
 import CoverBook from '../components/CoverBook'
 import {bookRepository} from "@/features/books/lib/repositories/BookRepository";
+import DataResult from "@/core/definitinos/DataResult";
+import {CreateBookErrors} from "@/features/books/definitions/errors/CreateBookErrors";
 
 interface Props {
     book? : Book
@@ -62,7 +61,7 @@ export default function EditBookPageClient({ book : defaultBook } : Props) {
             toast.error('Debes seleccionar un editor')
             return false
         }
-        if(!image){
+        if(!imagePreview){
             toast.error('Debes seleccionar una imagen')
             return false
         }
@@ -84,10 +83,8 @@ export default function EditBookPageClient({ book : defaultBook } : Props) {
             categories: categories.map(category => category.itemUuid)
         }
         setLoading(true)
-        if(defaultBook){
 
-        } else {
-            const result = await bookRepository.createBook(request, image ?? undefined)
+        const handleResult = (result : DataResult<Book, CreateBookErrors>) => {
             result.handle({
                 onSuccess: (book) => {
                     toast.success('Libro creado')
@@ -98,6 +95,14 @@ export default function EditBookPageClient({ book : defaultBook } : Props) {
                 },
                 onFinally: () => setLoading(false)
             })
+        }
+
+        if(defaultBook){
+            const result = await bookRepository.updateBook(defaultBook.itemUuid, request, image ?? undefined)
+            handleResult(result)
+        } else {
+            const result = await bookRepository.createBook(request, image ?? undefined)
+            handleResult(result)
         }
     }
 

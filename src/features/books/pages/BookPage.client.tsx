@@ -15,6 +15,9 @@ import BaseResponse from "@/core/definitinos/BaseResponse";
 import ReviewComponent from "@/features/reviews/components/ReviewComponent";
 import BasicLoader from "@/core/components/loaders/BasicLoader";
 import DeleteBookButton from "@/features/books/components/DeleteBookButton";
+import Link from "next/link";
+import EditIcon from "@/core/components/icons/EditIcon";
+import EditBookButton from "@/features/books/components/EditBookButton";
 
 interface Props {
     initialBook: Book,
@@ -56,13 +59,16 @@ export default function BookPageClient({initialBook, initialsReviews}: Props) {
             <section className="flex flex-col sm:flex-row gap-4 sm:gap-6">
                 <CoverBook cover={book.coverUrl} className={'w-full sm:w-64 md:w-80 rounded-lg truncate shadow-lg'}/>
                 <article className="flex flex-col gap-4 flex-1">
-                    <header className={'flex flex-row justify-between items-center'}>
+                    <header className={'flex flex-col xs:flex-row justify-between xs:items-center'}>
                         <h1 className="text-3xl font-bold uppercase flex flex-col sm:flex-row sm:gap-2">
                             {book.name}
                         </h1>
-                        <DeleteBookButton bookId={bookId} onDeleted={() => router.push('/')}/>
+                        <div className={'flex flex-row items-center'}>
+                            <EditBookButton bookId={bookId}/>
+                            <DeleteBookButton bookId={bookId} onDeleted={() => router.push('/')}/>
+                        </div>
                     </header>
-                    <main className={'flex flex-col gap-4'}>
+                    <main className={'flex flex-col gap-2'}>
                         <div className={'w-full flex flex-col gap-2 sm:gap-0 sm:flex-row sm:justify-between'}>
                             <section>
                                 <h3 className={'text-xl italic font-bold'}>Editorial</h3>
@@ -73,7 +79,7 @@ export default function BookPageClient({initialBook, initialsReviews}: Props) {
                                 <span className={'text-lg'}>{book.numberOfPages}</span>
                             </section>
                         </div>
-                        <div className={'w-full flex flex-col gap-2 sm:gap-0 sm:flex-row sm:justify-between'}>
+                        <div className={'w-full flex flex-col gap-2 sm:flex-row sm:justify-between'}>
                             <section>
                                 <h3 className={'text-xl italic font-bold'}>Autores</h3>
                                 <div className="text-lg italic flex flex-row gap-2 flex-wrap">

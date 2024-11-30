@@ -5,8 +5,8 @@ import {Book, CreateBookRequest, OrderBook} from "@/features/books/definitions/B
 import DataResult from "@/core/definitinos/DataResult";
 import {GetBookErrors} from "@/features/books/definitions/errors/GetBookErrors";
 import {AxiosError} from "axios";
-import toast from "react-hot-toast";
 import {CreateBookErrors} from "@/features/books/definitions/errors/CreateBookErrors";
+
 interface  Params  {
     limit : number
     offset : number
@@ -51,7 +51,7 @@ class BookRepository{
 
     async deleteBook(bookId : string) : Promise<Error | undefined> {
         try{
-            await baseAxiosClient.delete<BaseResponse<string, string>>(`/books/${bookId}`)
+            await authAxiosClient.delete<BaseResponse<string, string>>(`/books/${bookId}`)
             return undefined
         } catch(ex){
             console.error(ex)
@@ -68,37 +68,36 @@ class BookRepository{
 
             return DataResult.createSuccess(bookResult.data.result)
         } catch (ex) {
-            if(ex instanceof AxiosError){
-                if(ex.status === 400)
-                    return DataResult.createFailure(CreateBookErrors.DATA_INVALID)
-
-                if(ex.status === 401)
-                    return DataResult.createFailure(CreateBookErrors.UNAUTHORIZED)
-
-                if(ex.status === 409)
-                    return DataResult.createFailure(CreateBookErrors.CONFLICT)
-
-            }
-
-            return DataResult.createFailure(CreateBookErrors.UNEXPECTED)
+            return DataResult.createFailure(this.#manageBookCreateError(ex))
         }
+    }
 
+    async updateBook(bookId : string, bookRequest : CreateBookRequest, cover?: File) : Promise<DataResult<Book, CreateBookErrors>> {
+        try{
+            const bookResult = await authAxiosClient.put<BaseResponse<Book, string>>(`/books/${bookId}`, bookRequest)
 
-            // .then((response) => {
-            //     const book = response.data.result
-            //     authAxiosClient.patchForm(`/books/${book.itemUuid}/cover`, {file : image})
-            //         .then(() => {
-            //             toast.success('Libro creado')
-            //             router.push(`/books/${book.itemUuid}`)
-            //         }).catch(() => toast.error('Error al subir la imagen')
-            //     ).finally(() => setLoading(false))
-            // })
-            // .catch((ex) => {
+            if(cover)
+                await authAxiosClient.patchForm(`/books/${bookResult.data.result.itemUuid}/cover`, {file : cover})
 
-            //
-            //     toast.error('Error al crear el libro')
-            //     setLoading(false)
-            // })
+            return DataResult.createSuccess(bookResult.data.result)
+        } catch (ex) {
+           return DataResult.createFailure(this.#manageBookCreateError(ex))
+        }
+    }
+
+    #manageBookCreateError(ex : unknown) : CreateBookErrors{
+        if(ex instanceof AxiosError){
+            if(ex.status === 400)
+                return CreateBookErrors.DATA_INVALID
+
+            if(ex.status === 401)
+                return CreateBookErrors.UNAUTHORIZED
+
+            if(ex.status === 409)
+                return CreateBookErrors.CONFLICT
+
+        }
+        return CreateBookErrors.UNEXPECTED
     }
 
 }
