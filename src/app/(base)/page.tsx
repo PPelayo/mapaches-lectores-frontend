@@ -1,4 +1,4 @@
-'use server'
+export const dynamic = "force-dynamic";
 
 import CategoriesCarouselServer from "@/core/components/carousels/CategoriesCarousel.server";
 import BasicLoader from "@/core/components/loaders/BasicLoader";

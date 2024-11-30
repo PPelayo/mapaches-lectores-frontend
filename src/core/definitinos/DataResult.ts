@@ -60,7 +60,7 @@ export default class DataResult<TSuccess, TError> {
         {
             onSuccess : (data : TSuccess) => void,
             onFailure : (error : TError) => void,
-            onFinally : () => void
+            onFinally? : () => void
         }
     ) {
         if(!this.#success){

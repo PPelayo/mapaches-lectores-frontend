@@ -1,19 +1,17 @@
 'use server'
-import PaginationResult from "@/core/definitinos/PaginationResult";
-import {Book} from "@/features/books/definitions/Book";
 import SearcherBooksClient from "@/features/searcher/components/SearcherBooks.client";
 import {bookRepository} from "@/features/books/lib/repositories/BookRepository";
 
 export default async function SearcherBooksServer({ searchParams } : { searchParams: { q: string, category : string } }){
-    const result: PaginationResult<Book> | undefined = await bookRepository.getBooks({search: searchParams.q, limit: 15, offset: 0, category: searchParams.category})
+    const result = await bookRepository.getBooks({search: searchParams.q, limit: 15, offset: 0, category: searchParams.category})
 
-    if (!result) {
+    if (result.isFailure()) {
         return <SearcherBooksClient/>
     }
 
     return (
         <>
-            <SearcherBooksClient initialFetch={result}/>
+            <SearcherBooksClient initialFetch={result.getData()}/>
         </>
     )
 }

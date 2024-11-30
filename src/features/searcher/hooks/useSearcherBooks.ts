@@ -30,15 +30,16 @@ export default function useSearcherBooks(itemsPerFetch : number, initialFetch : 
         const currentOffset = customOffset ?? offset
         getResults(currentOffset, search, searchParams.get('category') ?? undefined)
             .then((result) => {
-                setOffset(prev => prev + (result?.data?.length ?? 0))
-                setHasMore(result?.hasNext ?? false)
-                console.log('result', result)
-                setBooks(prev => [...prev, ...result?.data ?? []])
+                result.handle({
+                    onSuccess: (paginationResult) => {
+                        setOffset(prev => prev + (paginationResult.data.length))
+                        setHasMore(paginationResult.hasNext)
+                        setBooks(prev => [...prev, ...paginationResult.data])
+                    },
+                    onFailure: () => setError('Ocurrió un error al cargar los libros'),
+                    onFinally : () => setLoading(false)
+                })
             })
-            .catch(() => {
-                setError('Ocurrió un error al cargar los libros')
-            })
-            .finally(() => setLoading(false))
     }, [loading, offset, itemsPerFetch, hasMore, searchParams])
 
     const clear = () => {
