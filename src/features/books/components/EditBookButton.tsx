@@ -17,7 +17,7 @@ export default function EditBookButton({ bookId } : Props) {
         <>
             <Link
                 className={'cursor-pointer p-2 rounded-full'}
-                href={`/books/edit/${bookId}`}>
+                href={`/books/edit/${bookId}?refresh=${new Date().getTime()}`}>
                 <EditIcon className={'w-8 h-auto text-yellow-400'}/>
             </Link>
         </>

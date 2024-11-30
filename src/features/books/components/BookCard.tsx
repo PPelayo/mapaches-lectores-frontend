@@ -30,7 +30,7 @@ export default function BookCard ({ book, onClick } : Props) {
                 className={'w-full'}
             />
             <div className="flex flex-col gap-0 items-center px-2 py-1 truncate">
-                <h2 className="text-lg sm:text-xl font-bold">{book.name}</h2>
+                <h2 className="text-lg sm:text-xl font-bold w-full truncate">{book.name}</h2>
                 <h6 className="italic md:text-lg">
                     {
                         authorsNameToDisplay.map((name, index) =>(
@@ -39,25 +39,22 @@ export default function BookCard ({ book, onClick } : Props) {
                     }
                 </h6>
                 <section className="w-full text-right flex flex-row gap-2 justify-end items-center">
-                    <Rating
-                        value={book.reviewsAvarage}
-                        readOnly
-                        suppressHydrationWarning={true}
-                        size="medium"
-                        className="hidden sm:flex"
-                        sx={{
-                            display: { xs: 'none', sm: 'flex' }
-                        }}
-                    />
-                    <Rating
-                        value={book.reviewsAvarage}
-                        readOnly
-                        suppressHydrationWarning={true}
-                        size="small"
-                        sx={{
-                            display: { sm: 'hidden' }
-                        }}
-                    />
+                    <div className={'hidden sm:flex'}>
+                        <Rating
+                            value={book.reviewsAvarage}
+                            readOnly
+                            suppressHydrationWarning={true}
+                            size="medium"
+                        />
+                    </div>
+                    <div className={'sm:hidden'}>
+                        <Rating
+                            value={book.reviewsAvarage}
+                            readOnly
+                            suppressHydrationWarning={true}
+                            size="small"
+                        />
+                    </div>
                     <span>({book.reviewsCount})</span>
                 </section>
             </div>

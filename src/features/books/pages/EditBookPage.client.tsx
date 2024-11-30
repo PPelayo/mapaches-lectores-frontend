@@ -88,7 +88,7 @@ export default function EditBookPageClient({ book : defaultBook } : Props) {
             result.handle({
                 onSuccess: (book) => {
                     toast.success('Libro creado')
-                    router.push(`/books/${book.itemUuid}`)
+                    router.push(`/books/${book.itemUuid}?refresh=${new Date().getTime()}`)
                 },
                 onFailure: (error) => {
                     toast.error(error.toString())

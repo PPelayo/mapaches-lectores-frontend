@@ -9,7 +9,7 @@ interface Props {
 export default  function CoverBook({cover, className} : Props){
     return (
         <>
-            <picture className={`${className}`}>
+            <picture className={`h-fit ${className}`}>
                 {
                     cover
                         ?
