@@ -1,9 +1,11 @@
+'use server'
+
 import CategoriesCarouselServer from "@/core/components/carousels/CategoriesCarousel.server";
 import BasicLoader from "@/core/components/loaders/BasicLoader";
 import MorePopularBooks from "@/features/books/components/MorePopularBooks";
 import {Suspense} from "react";
 
-export default function Home() {
+export default async function Home() {
     return (
         <>
             <Suspense fallback={

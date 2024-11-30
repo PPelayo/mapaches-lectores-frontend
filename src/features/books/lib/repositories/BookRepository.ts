@@ -8,8 +8,8 @@ import {AxiosError} from "axios";
 import {CreateBookErrors} from "@/features/books/definitions/errors/CreateBookErrors";
 
 interface  Params  {
-    limit : number
-    offset : number
+    limit? : number
+    offset? : number
     search? : string
     category? : string
     order? : OrderBook
@@ -17,7 +17,7 @@ interface  Params  {
 
 class BookRepository{
 
-    async getBooks({limit = 15, offset = 0,search , category, order} : Params ) : Promise<PaginationResult<Book> | undefined> {
+    async getBooks({limit = 15, offset = 0,search , category, order} : Params ) : Promise<DataResult<PaginationResult<Book>, GetBookErrors>> {
         try{
             const res = await baseAxiosClient.get<BaseResponse<PaginationResult<Book>,string>>('/books', {
                 params: {
@@ -28,10 +28,10 @@ class BookRepository{
                     search: search
                 }
             })
-            return res.data.result
+            return DataResult.createSuccess(res.data.result)
 
         } catch {
-            return
+            return DataResult.createFailure(GetBookErrors.UNEXPECTED)
         }
     }
 

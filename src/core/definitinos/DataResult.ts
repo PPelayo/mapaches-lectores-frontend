@@ -28,12 +28,12 @@ export default class DataResult<TSuccess, TError> {
 
     getData(){
         if(!this.#success) throw new Error('The result cannot be accessed because it is not success')
-        return this.#data
+        return this.#data!
     }
 
     getError(){
         if(this.#success) throw new Error('The error cannot be accessed because it is success')
-        return this.#error
+        return this.#error!
     }
 
     toString(){
