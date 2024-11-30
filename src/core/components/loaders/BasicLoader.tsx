@@ -19,7 +19,7 @@ export default function BasicLoader(props : Props) {
                 {...divProps}
             >
                 <PulseLoader
-                    color="var(--background)"
+                    color={color}
                     {...innerProps}
                  />
             </div>

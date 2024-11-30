@@ -1,16 +1,12 @@
 import Category from "@/features/books/definitions/Category"
 import FullError from "../errors/FullError"
 import CategoriesCarouselClient from "./CategoriesCarousel.client"
-import { baseAxiosClient } from "@/features/auth/axios/axiosClient"
-import PaginationResult from "@/core/definitinos/PaginationResult"
-import BaseResponse from "@/core/definitinos/BaseResponse"
-import MorePopularBooksCarousel from "@/features/books/components/MorePopularBooksCarousel";
 import {categoryRepository} from "@/features/categories/lib/repository/CategoryRepository";
 
 export default async function CategoriesCarouselServer(){
 
-    let categories : Category[] = await categoryRepository.getAll()
-    let error = categories.length === 0 ? 'No se han podido cargar las categorias' : undefined
+    const categories : Category[] = await categoryRepository.getAll()
+    const error = categories.length === 0 ? 'No se han podido cargar las categorias' : undefined
     return (
         <>
             <FullError error={error}>

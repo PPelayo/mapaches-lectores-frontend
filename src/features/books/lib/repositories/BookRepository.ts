@@ -30,7 +30,7 @@ class BookRepository{
             })
             return res.data.result
 
-        } catch (ex){
+        } catch {
             return
         }
     }

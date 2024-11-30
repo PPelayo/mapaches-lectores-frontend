@@ -1,13 +1,7 @@
 import {InstagramIcon} from "@/core/components/icons/InstagramIcon";
 import {GitHubIcon} from "@/core/components/icons/GitHubIcon";
 import {XICon} from "@/core/components/icons/XIcon";
-import {ReactNode} from "react";
-import Link from "next/link";
 
-interface RedSocialProps {
-    icon: ReactNode,
-    url: string
-}
 
 export default function MainFooter() {
     return (

@@ -2,7 +2,7 @@
 
 import {Book} from "@/features/books/definitions/Book";
 import CoverBook from "@/features/books/components/CoverBook";
-import { useMemo } from "react";
+import {useMemo} from "react";
 import dynamic from 'next/dynamic';
 
 const Rating = dynamic(() => import('@mui/material/Rating'), { ssr: false });

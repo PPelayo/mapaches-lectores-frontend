@@ -3,10 +3,10 @@
 import PrimaryButton from "@/core/components/buttons/PrimaryButton";
 import BasicTextField from "@/core/components/inputs/BasicTextField";
 import BaseResponse from "@/core/definitinos/BaseResponse";
-import { authAxiosClient } from "@/features/auth/axios/axiosClient";
-import { Publisher } from "@/features/books/definitions/Publisher";
-import { FormEvent, useState } from "react";
-import toast, { Toaster } from "react-hot-toast";
+import {authAxiosClient} from "@/features/auth/axios/axiosClient";
+import {Publisher} from "@/features/books/definitions/Publisher";
+import {FormEvent, useState} from "react";
+import toast, {Toaster} from "react-hot-toast";
 
 interface Props {
     onCreated? : (publisher : Publisher) => void

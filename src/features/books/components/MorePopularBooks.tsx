@@ -1,5 +1,5 @@
-import { baseAxiosClient } from "@/features/auth/axios/axiosClient"
-import { Book } from "../definitions/Book"
+import {baseAxiosClient} from "@/features/auth/axios/axiosClient"
+import {Book} from "../definitions/Book"
 import BaseResponse from "@/core/definitinos/BaseResponse"
 import PaginationResult from "@/core/definitinos/PaginationResult"
 import FullError from "@/core/components/errors/FullError"

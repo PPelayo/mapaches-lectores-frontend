@@ -1,12 +1,12 @@
 'use client'
 
-import { categoryRepository } from "@/features/categories/lib/repository/CategoryRepository";
+import {categoryRepository} from "@/features/categories/lib/repository/CategoryRepository";
 import FullError from "@/core/components/errors/FullError";
 import Link from "next/link";
-import { useEffect, useMemo, useState } from "react";
+import {useEffect, useMemo, useState} from "react";
 import Category from "@/features/books/definitions/Category";
 import BasicLoader from "@/core/components/loaders/BasicLoader";
-import { useSearchParams } from "next/navigation";
+import {useSearchParams} from "next/navigation";
 
 interface Props {
     onCategoryClick? : (category : Category) => void,

@@ -1,4 +1,4 @@
-import {Dialog, DialogTitle, DialogContent, DialogActions} from "@mui/material";
+import {Dialog} from "@mui/material";
 import {ReactNode} from "react";
 
 interface Props {

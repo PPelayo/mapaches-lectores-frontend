@@ -1,8 +1,8 @@
 import {useCallback, useEffect, useState} from "react";
 import {Book} from "@/features/books/definitions/Book";
 import PaginationResult from "@/core/definitinos/PaginationResult";
-import { bookRepository } from "@/features/books/lib/repositories/BookRepository";
-import { ReadonlyURLSearchParams } from "next/navigation";
+import {bookRepository} from "@/features/books/lib/repositories/BookRepository";
+import {ReadonlyURLSearchParams} from "next/navigation";
 
 export default function useSearcherBooks(itemsPerFetch : number, initialFetch : PaginationResult<Book> | undefined, searchParams: ReadonlyURLSearchParams) {
 

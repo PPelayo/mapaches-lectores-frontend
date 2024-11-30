@@ -1,5 +1,4 @@
 import CoverBook from "@/features/books/components/CoverBook";
-import {Rating} from "@mui/material";
 
 export default function BookCardSkeleton(){
     return (

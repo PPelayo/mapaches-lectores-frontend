@@ -1,5 +1,4 @@
 import Category from "@/features/books/definitions/Category";
-import {AxiosError} from "axios";
 import {baseAxiosClient} from "@/features/auth/axios/axiosClient";
 import BaseResponse from "@/core/definitinos/BaseResponse";
 import PaginationResult from "@/core/definitinos/PaginationResult";
@@ -16,7 +15,7 @@ class CategoryRepository {
             })
             return res.data.result.data
 
-        } catch (ex){
+        } catch {
             return []
         }
     }

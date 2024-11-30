@@ -5,11 +5,10 @@ import {Book} from "@/features/books/definitions/Book";
 import useSearcherBooks from "@/features/searcher/hooks/useSearcherBooks";
 import BasicLoader from "@/core/components/loaders/BasicLoader";
 import PaginationResult from "@/core/definitinos/PaginationResult";
-import {useEffect, useRef, useState} from "react";
+import {useEffect, useRef} from "react";
 import {useSearchParams} from "next/navigation";
 import FullError from "@/core/components/errors/FullError";
 import Link from "next/link";
-import { data } from "motion/react-client";
 
 interface  Props {
     initialFetch? : PaginationResult<Book>

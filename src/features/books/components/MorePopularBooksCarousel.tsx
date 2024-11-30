@@ -1,11 +1,10 @@
 'use client'
 
 import React from "react";
-import { Button } from "@mui/material";
-import { Swiper, SwiperSlide } from "swiper/react";
-import { Swiper as SwiperCore } from "swiper";
-import { Navigation } from "swiper/modules";
-import { Book } from "@/features/books/definitions/Book";
+import {Swiper, SwiperSlide} from "swiper/react";
+import {Swiper as SwiperCore} from "swiper";
+import {Navigation} from "swiper/modules";
+import {Book} from "@/features/books/definitions/Book";
 import BookCard from "@/features/books/components/BookCard";
 import 'swiper/css';
 import Link from "next/link";

@@ -1,13 +1,10 @@
 'use client'
 
-import { Swiper, SwiperSlide } from "swiper/react";
+import {Swiper, SwiperSlide} from "swiper/react";
 import SwipperClass from 'swiper'
-import { useState } from "react";
+import {useState} from "react";
 import Category from "@/features/books/definitions/Category";
 import Link from "next/link";
-import { Button } from "@mui/material";
-import ArrowLeftIcon from "@/core/components/icons/ArrowLeftIcon";
-import ArrowRightIcon from "@/core/components/icons/ArrowRightIcon";
 import CarouselLeftButton from "@/core/components/buttons/CarouselLeftButton";
 import CarouselRightButton from "@/core/components/buttons/CarouselRightButton";
 

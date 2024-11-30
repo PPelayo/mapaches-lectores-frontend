@@ -3,7 +3,7 @@
 import DeleteIcon from "@/core/components/icons/DeleteIcon";
 import BaseModal from "@/core/components/modal/BaseModal";
 import {useState} from "react";
-import {DialogActions, DialogContent, DialogTitle} from "@mui/material";
+import {DialogContent, DialogTitle} from "@mui/material";
 import BasicLoader from "@/core/components/loaders/BasicLoader";
 import {useUserStore} from "@/features/auth/services/useUserStore";
 import {bookRepository} from "@/features/books/lib/repositories/BookRepository";

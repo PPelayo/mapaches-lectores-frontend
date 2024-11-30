@@ -1,5 +1,5 @@
-import React from 'react';
 import type {SVGProps} from 'react';
+import React from 'react';
 
 export function XICon(props: SVGProps<SVGSVGElement>) {
     return (<svg xmlns="http://www.w3.org/2000/svg" width={14} height={14} viewBox="0 0 14 14" {...props}>
