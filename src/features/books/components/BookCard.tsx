@@ -45,13 +45,18 @@ export default function BookCard ({ book, onClick } : Props) {
                         suppressHydrationWarning={true}
                         size="medium"
                         className="hidden sm:flex"
+                        sx={{
+                            display: { xs: 'none', sm: 'flex' }
+                        }}
                     />
                     <Rating
                         value={book.reviewsAvarage}
                         readOnly
                         suppressHydrationWarning={true}
                         size="small"
-                        className="sm:hidden"
+                        sx={{
+                            display: { sm: 'hidden' }
+                        }}
                     />
                     <span>({book.reviewsCount})</span>
                 </section>
