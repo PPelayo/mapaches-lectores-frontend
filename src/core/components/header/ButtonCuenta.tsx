@@ -10,6 +10,7 @@ import {authAxiosClient} from '@/features/auth/axios/axiosClient'
 import BaseResponse from '@/core/definitinos/BaseResponse'
 import User from '@/features/auth/definitions/user'
 import {Menu, MenuButton, MenuItem, MenuItems, MenuSeparator, Transition,} from '@headlessui/react'
+import {useRouter} from "next/navigation";
 
 export default function ButtonCuenta() {
     const {user, setUser} = useUserStore()
@@ -70,10 +71,15 @@ function ButtonWithoutLogin() {
 function ButtonWithLogin({user}: { user: User }) {
 
     const {clearUser} = useUserStore()
+    const router = useRouter()
 
     const handleCloseSesion = () => {
         clearUser()
         deleteTokens()
+    }
+
+    const handleUserAccount = () => {
+        router.push('/account')
     }
 
     return (
@@ -106,6 +112,7 @@ function ButtonWithLogin({user}: { user: User }) {
                                 'px-2 py-2 transition-all duration-200 hover:bg-secondary hover:text-onSecondary'
                             }
                             as={'button'}
+                            onClick={handleUserAccount}
                         >
                             Cuenta
                         </MenuItem>
