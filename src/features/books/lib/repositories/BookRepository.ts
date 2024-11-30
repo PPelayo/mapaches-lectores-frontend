@@ -6,6 +6,7 @@ import DataResult from "@/core/definitinos/DataResult";
 import {GetBookErrors} from "@/features/books/definitions/errors/GetBookErrors";
 import {AxiosError} from "axios";
 import {CreateBookErrors} from "@/features/books/definitions/errors/CreateBookErrors";
+import {Review} from "@/features/reviews/definitions/review";
 
 interface  Params  {
     limit? : number
@@ -82,6 +83,15 @@ class BookRepository{
             return DataResult.createSuccess(bookResult.data.result)
         } catch (ex) {
            return DataResult.createFailure(this.#manageBookCreateError(ex))
+        }
+    }
+
+    async getBookReviews(bookId : string) : Promise<DataResult<PaginationResult<Review>, GetBookErrors.UNEXPECTED>> {
+        try{
+            const reviewsResult = await baseAxiosClient.get<BaseResponse<PaginationResult<Review>, string>>(`/books/${bookId}/reviews`)
+            return DataResult.createSuccess(reviewsResult.data.result)
+        } catch {
+            return DataResult.createFailure(GetBookErrors.UNEXPECTED)
         }
     }
 
