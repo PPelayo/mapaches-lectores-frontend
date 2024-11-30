@@ -65,7 +65,9 @@ export default function CategoriesCarouselClient({ categories }: Props) {
 function CategoryCard({ category }: { category: Category }) {
     return (
         <>
-            <Link href={`/search?category=${category.description}&category=terror`} className="w-auto rounded-2xl bg-background flex items-center justify-center px-8 py-4">
+            <Link
+                href={`/search?category=${category.description}`}
+                className="w-auto rounded-2xl bg-background flex items-center justify-center px-8 py-4 transition-colors duration-300 hover:bg-primary">
                 <button className="truncate">
                     <h2 className="text-2xl font-bold">
                         {category.description}

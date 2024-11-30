@@ -14,7 +14,9 @@ export default function MainHeader() {
                     <div className={'sm:hidden'}>
                         <NavigationButton/>
                     </div>
-                    <Link href={'/'} className="h-full border rounded-lg cursor-pointer">ZONA DEL LOGO</Link>
+                    <Link href={'/'} className="cursor-pointer">
+                        <img src="/logo.png" alt="logo" className={'h-12'}/>
+                    </Link>
                 </div>
                 <div className='hidden sm:block h-full'>
                     <SearcherHeader/>

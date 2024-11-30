@@ -38,12 +38,10 @@ export default function Login() {
     return (
         <>
             <Toaster position='bottom-center' />
-            <div className="w-full flex flex-col items-center justify-center mt-10">
+            <div className="w-full flex flex-col items-center justify-center my-10">
                 <header className="flex flex-col items-center gap-6">
                     <Link href={'/'}>
-                        <picture className="border-2 border-secondary rounded-lg text-secondary text-2xl px-4 py-2">
-                            Insertar logo
-                        </picture>
+                        <img src={'/logo.png'} alt={'Logo'} className={'h-32'} />
                     </Link>
                     <h1 className="text-3xl font-bold uppercase">
                         Iniciar Sesión

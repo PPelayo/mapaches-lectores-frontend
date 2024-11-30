@@ -24,7 +24,7 @@ export default function BookCard ({ book, onClick } : Props) {
     return (
         <article
             onClick={() => onClick && onClick(book)}
-            className="shadow-lg border rounded-lg truncate flex flex-col">
+            className="shadow-lg border rounded-lg truncate flex flex-col transition-all duration-300 hover:scale-105">
             <CoverBook
                 cover={book.coverUrl}
                 className={'w-full'}
