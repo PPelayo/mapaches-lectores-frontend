@@ -15,8 +15,6 @@ import BaseResponse from "@/core/definitinos/BaseResponse";
 import ReviewComponent from "@/features/reviews/components/ReviewComponent";
 import BasicLoader from "@/core/components/loaders/BasicLoader";
 import DeleteBookButton from "@/features/books/components/DeleteBookButton";
-import Link from "next/link";
-import EditIcon from "@/core/components/icons/EditIcon";
 import EditBookButton from "@/features/books/components/EditBookButton";
 
 interface Props {
@@ -119,6 +117,7 @@ export default function BookPageClient({initialBook, initialsReviews}: Props) {
                     <span>Reseñas</span>
                     <Rating
                         value={book.reviewsAvarage}
+                        precision={0.5}
                     />
                     <span>({book.reviewsCount})</span>
                 </h2>
