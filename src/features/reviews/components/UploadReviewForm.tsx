@@ -128,6 +128,7 @@ export default function UploadReviewForm({ bookId, onReviewCreated }: Props) {
                             multiline={true}
                             required={showButtons}
                             variant="standard"
+                            className={`w-full`}
                             sx={{
                                 '& .MuiInputLabel-root.Mui-focused': {
                                     color: 'var(--secondary)',
