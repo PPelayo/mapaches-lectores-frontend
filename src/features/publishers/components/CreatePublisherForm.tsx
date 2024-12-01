@@ -21,7 +21,7 @@ export default function CreatePublisherForm({ onCreated } : Props) {
         e.preventDefault()
         
         setLoading(true)
-        authAxiosClient.post<BaseResponse<Publisher, string>>('/publishers')
+        authAxiosClient.post<BaseResponse<Publisher, string>>('/publishers', { name })
         .then((result) => {
             onCreated?.(result.data.result)
         })
