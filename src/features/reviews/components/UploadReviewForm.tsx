@@ -116,27 +116,28 @@ export default function UploadReviewForm({ bookId, onReviewCreated }: Props) {
                             },
                         }}
                     />
-                    <TextField
-                        autoComplete="off"
-                        value={comment}
-                        onChange={(e) => setComment(e.target.value)}
-                        type="text"
-                        label={'Comentario...'}
-                        multiline={true}
-                        required={showButtons}
-                        variant="standard"
-                        className={`col-span-6 sm:col-span-8 ${
-                            !showButtons ? 'hidden' : ''
-                        }`}
-                        sx={{
-                            '& .MuiInputLabel-root.Mui-focused': {
-                                color: 'var(--secondary)',
-                            },
-                            '& .MuiInput-root::after': {
-                                borderColor: 'var(--secondary)',
-                            },
-                        }}
-                    />
+                    <div className={`col-span-6 sm:col-span-8 ${
+                        !showButtons ? 'hidden' : ''
+                    }`}>
+                        <TextField
+                            autoComplete="off"
+                            value={comment}
+                            onChange={(e) => setComment(e.target.value)}
+                            type="text"
+                            label={'Comentario...'}
+                            multiline={true}
+                            required={showButtons}
+                            variant="standard"
+                            sx={{
+                                '& .MuiInputLabel-root.Mui-focused': {
+                                    color: 'var(--secondary)',
+                                },
+                                '& .MuiInput-root::after': {
+                                    borderColor: 'var(--secondary)',
+                                },
+                            }}
+                        />
+                    </div>
 
                     {showButtons && (
                         <>
