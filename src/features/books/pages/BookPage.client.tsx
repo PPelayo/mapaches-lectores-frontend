@@ -63,7 +63,7 @@ export default function BookPageClient({initialBook, initialsReviews}: Props) {
                         </h1>
                         <div className={'flex flex-row items-center'}>
                             <EditBookButton bookId={bookId}/>
-                            <DeleteBookButton bookId={bookId} onDeleted={() => router.push('/')}/>
+                            <DeleteBookButton bookId={bookId} onDeleted={() => router.push(`/?refresh=${new Date().getTime()}`)}/>
                         </div>
                     </header>
                     <main className={'flex flex-col gap-2'}>
