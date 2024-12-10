@@ -1,38 +1,18 @@
 'use client'
 
-import Link from 'next/link'
-import UserIcon from '../icons/UserIcon'
-import {useUserStore} from '@/features/auth/services/useUserStore'
-import {Fragment, useEffect, useState} from 'react'
-import {deleteTokens, getTokens} from '@/features/auth/services/tokenService'
-import BasicLoader from '../loaders/BasicLoader'
-import {authAxiosClient} from '@/features/auth/axios/axiosClient'
-import BaseResponse from '@/core/definitinos/BaseResponse'
 import User from '@/features/auth/definitions/user'
-import {Menu, MenuButton, MenuItem, MenuItems, MenuSeparator, Transition,} from '@headlessui/react'
-import {useRouter} from "next/navigation";
+import { deleteTokens } from '@/features/auth/services/tokenService'
+import { useUserStore } from '@/features/auth/services/useUserStore'
+import { Menu, MenuButton, MenuItem, MenuItems, MenuSeparator, Transition, } from '@headlessui/react'
+import Link from 'next/link'
+import { useRouter } from "next/navigation"
+import { Fragment, useMemo } from 'react'
+import UserIcon from '../icons/UserIcon'
+import BasicLoader from '../loaders/BasicLoader'
 
 export default function ButtonCuenta() {
-    const {user, setUser} = useUserStore()
-    const [loading, setLoading] = useState(false)
 
-    useEffect(() => {
-        const tokens = getTokens()
-        if (user || !tokens) return
-        setLoading(true)
-        authAxiosClient
-            .get<BaseResponse<User, string>>('/user/me')
-            .then(({data}) => {
-                setUser(data.result)
-            })
-            .catch((err) => {
-                console.error('Error al obtener los datos', err)
-                // deleteTokens()
-            })
-            .finally(() => {
-                setLoading(false)
-            })
-    }, [user, setUser])
+    const { user, isLoadingUser: loading } = useUserStore()
 
     return (
         <>
@@ -47,9 +27,9 @@ export default function ButtonCuenta() {
                 loading={loading}
             >
                 {user ? (
-                    <ButtonWithLogin user={user}/>
+                    <ButtonWithLogin user={user} />
                 ) : (
-                    <ButtonWithoutLogin/>
+                    <ButtonWithoutLogin />
                 )}
             </BasicLoader>
         </>
@@ -62,16 +42,19 @@ function ButtonWithoutLogin() {
             href={'/auth/login'}
             className="text-lg rounded-lg px-4 py-2 transition-all duration-200 hover:text-onSecondary hover:bg-secondary flex flex-row items-center gap-2"
         >
-            <UserIcon className="w-7 sm:w-8 h-auto"/>
+            <UserIcon className="w-7 sm:w-8 h-auto" />
             Mi cuenta
         </Link>
     )
 }
 
-function ButtonWithLogin({user}: { user: User }) {
+function ButtonWithLogin({ user }: { user: User }) {
 
-    const {clearUser} = useUserStore()
+    console.log(user)
+    const { clearUser } = useUserStore()
     const router = useRouter()
+
+    const showAdminOption = useMemo(() => user.role === 'Admin' || user.role === 'Moderator', [user])
 
     const handleCloseSesion = () => {
         clearUser()
@@ -82,12 +65,16 @@ function ButtonWithLogin({user}: { user: User }) {
         router.push('/account')
     }
 
+    const handleAdministrar = () => {
+        router.push('/administrar')
+    }
+
     return (
         <div>
             <Menu>
                 <MenuButton
                     className="text-lg rounded-lg px-4 py-2 transition-all duration-200 hover:text-onSecondary hover:bg-secondary flex flex-row items-center gap-2">
-                    <UserIcon className="w-7 sm:w-8 h-auto"/>
+                    <UserIcon className="w-7 sm:w-8 h-auto" />
                     <div className={'hidden xs:block'}>
                         {user.name}
                     </div>
@@ -101,12 +88,24 @@ function ButtonWithLogin({user}: { user: User }) {
                     leaveFrom="transform opacity-100 scale-100"
                     leaveTo="transform opacity-0 scale-95"
                 >
-                    <MenuItems
+                     <MenuItems
                         anchor="bottom"
                         className={
                             'z-30 mt-2 absolute border border-onPrimaryContainer bg-primaryContainer rounded-lg shadow-xl flex flex-col text-onSecondary shadow-gray-400'
                         }
                     >
+                        {
+                            showAdminOption &&
+                            <MenuItem
+                                className={
+                                    'px-2 py-2 transition-all duration-200 hover:bg-secondary hover:text-onSecondary'
+                                }
+                                as={'button'}
+                                onClick={handleAdministrar}
+                            >
+                                Administrar
+                            </MenuItem>
+                        }
                         <MenuItem
                             className={
                                 'px-2 py-2 transition-all duration-200 hover:bg-secondary hover:text-onSecondary'
@@ -128,6 +127,7 @@ function ButtonWithLogin({user}: { user: User }) {
                         >
                             Cerrar sesión
                         </MenuItem>
+                        
                     </MenuItems>
                 </Transition>
             </Menu>
